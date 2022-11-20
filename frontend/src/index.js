@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Root from './routes/root';
 import Login from './routes/login';
-import ErrorPage from './error-page';
+import ErrorPage from './routes/error-page';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 
