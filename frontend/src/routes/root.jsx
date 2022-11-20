@@ -1,6 +1,6 @@
 const Root = () => (
   <>
-    <div id="sidebar">
+    <div>
       <h1>React Router Contacts</h1>
       <div>
         <form id="search-form" role="search">

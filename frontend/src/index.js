@@ -6,6 +6,7 @@ import {
   // Route,
   // Link,
 } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Root from './routes/root';
 import Login from './routes/login';
