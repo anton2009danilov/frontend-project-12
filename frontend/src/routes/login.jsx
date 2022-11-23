@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import * as yup from 'yup';
+import axios from 'axios';
 import { useFormik } from 'formik';
 
 const Login = () => {
+  const [authError, setAuthError] = useState('');
+
   const validationSchema = yup.object().shape({
     username: yup.string().required().min(3).max(20),
-    password: yup.string().required().min(6),
+    password: yup.string().required().min(5),
   });
 
   const formik = useFormik({
@@ -14,8 +18,21 @@ const Login = () => {
       password: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      delete formik.errors.auth;
+      const { username, password } = values;
+      console.log(username, password);
+
+      axios.post('/api/v1/login', { username, password }).then((response) => {
+        console.log(response.data);
+        window.localStorage.token = response.data.token;
+        window.location.replace('/');
+      })
+        .catch((e) => {
+          console.log(e);
+          delete window.localStorage.token;
+          setAuthError('Ошибка авторизации');
+        });
     },
   });
 
@@ -34,7 +51,7 @@ const Login = () => {
               value={formik.values.email}
               required
             />
-            <Form.Text className="text-muted">
+            <Form.Text className="text-danger">
               {formik.errors.username}
             </Form.Text>
           </Form.Group>
@@ -49,8 +66,11 @@ const Login = () => {
               onChange={formik.handleChange}
               required
             />
-            <Form.Text className="text-muted">
+            <Form.Text className="text-danger">
               {formik.errors.password}
+            </Form.Text>
+            <Form.Text className="text-danger">
+              {authError}
             </Form.Text>
           </Form.Group>
           <Button variant="primary" type="submit">
