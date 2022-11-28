@@ -1,18 +1,23 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { useContext } from 'react';
+import { Navbar, Button, Container } from 'react-bootstrap';
+import AuthContext from '../contexts';
 
-const Header = () => (
-  <Navbar bg="light" expand="lg">
-    <Container>
-      <Navbar.Brand href="#home">Hexlet Chat</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/login">Login</Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-);
+const Header = () => {
+  const { loggedIn, logOut } = useContext(AuthContext);
+  const handleClick = () => {
+    logOut();
+    window.location.replace('/login');
+  };
+  console.log(loggedIn);
+
+  return (
+    <Navbar className="shadow-sm bg-white" expand="lg">
+      <Container>
+        <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
+        {loggedIn && <Button onClick={handleClick}>Выйти</Button>}
+      </Container>
+    </Navbar>
+  );
+};
 
 export default Header;

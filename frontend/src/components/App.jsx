@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import React from 'react';
 import {
   createBrowserRouter,
@@ -8,11 +8,12 @@ import {
   // Link,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
-import Header from './components/Header';
-import Root from './routes/root';
-import Login from './routes/login';
-import ErrorPage from './routes/error-page';
+import '../index.css';
+import Header from './Header';
+import Root from './MainPage';
+import Login from './LoginPage';
+import ErrorPage from './ErrorPage';
+import AuthProvider from '../contexts/AuthProvider';
 // import logo from './logo.svg';
 
 const router = createBrowserRouter([
@@ -21,9 +22,9 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: async () => {
-      const { token } = window.localStorage;
+      const { userId } = window.localStorage;
 
-      if (!token) {
+      if (!userId) {
         return redirect('/login');
       }
 
@@ -39,8 +40,12 @@ const router = createBrowserRouter([
 
 const App = () => (
   <React.StrictMode>
-    <Header />
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <div className="d-flex flex-column h-100">
+        <Header />
+        <RouterProvider router={router} />
+      </div>
+    </AuthProvider>
   </React.StrictMode>
 );
 
