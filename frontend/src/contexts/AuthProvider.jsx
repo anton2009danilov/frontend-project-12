@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={useMemo(() => ({ loggedIn, logIn, logOut }))}>
+    <AuthContext.Provider value={useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn])}>
       {children}
     </AuthContext.Provider>
   );
