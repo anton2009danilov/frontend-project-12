@@ -1,11 +1,8 @@
-// import './App.css';
 import React from 'react';
 import {
   createBrowserRouter,
   redirect,
   RouterProvider,
-  // Route,
-  // Link,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
@@ -14,7 +11,6 @@ import Root from './MainPage';
 import Login from './LoginPage';
 import ErrorPage from './ErrorPage';
 import AuthProvider from '../contexts/AuthProvider';
-// import logo from './logo.svg';
 
 const router = createBrowserRouter([
   {

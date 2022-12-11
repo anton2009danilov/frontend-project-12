@@ -8,7 +8,6 @@ const Header = () => {
     logOut();
     window.location.replace('/login');
   };
-  console.log(loggedIn);
 
   return (
     <Navbar className="shadow-sm bg-white" expand="lg">
