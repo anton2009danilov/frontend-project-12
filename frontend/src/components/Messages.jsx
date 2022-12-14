@@ -4,6 +4,7 @@ import { selectors } from '../slices/messagesSlice';
 
 const Messages = () => {
   const messages = useSelector(selectors.selectAll);
+
   const { id: currentChannelId } = useSelector((state) => state.currentChannel);
   const { length: messagesCount } = messages;
   console.log(messages, messagesCount, currentChannelId);

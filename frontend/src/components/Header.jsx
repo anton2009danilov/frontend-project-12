@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Navbar, Button, Container } from 'react-bootstrap';
-import AuthContext from '../contexts';
+import { AuthContext } from '../contexts';
 
 const Header = () => {
   const { loggedIn, logOut } = useContext(AuthContext);

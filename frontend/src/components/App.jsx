@@ -11,6 +11,7 @@ import Root from './MainPage';
 import Login from './LoginPage';
 import ErrorPage from './ErrorPage';
 import AuthProvider from '../contexts/AuthProvider';
+import SocketProvider from '../contexts/SocketProvider';
 
 const router = createBrowserRouter([
   {
@@ -36,12 +37,14 @@ const router = createBrowserRouter([
 
 const App = () => (
   <React.StrictMode>
-    <AuthProvider>
-      <div className="d-flex flex-column h-100">
-        <Header />
-        <RouterProvider router={router} />
-      </div>
-    </AuthProvider>
+    <SocketProvider>
+      <AuthProvider>
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <RouterProvider router={router} />
+        </div>
+      </AuthProvider>
+    </SocketProvider>
   </React.StrictMode>
 );
 

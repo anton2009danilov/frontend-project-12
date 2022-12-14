@@ -8,7 +8,7 @@ import { Form, Button, Card } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
 import { useFormik } from 'formik';
-import useAuth from '../hooks';
+import { useAuth } from '../hooks';
 
 const Login = () => {
   const auth = useAuth();
