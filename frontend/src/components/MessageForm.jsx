@@ -17,14 +17,17 @@ const MessageForm = () => {
     },
     onSubmit: async (values, { resetForm }) => {
       const { message: body } = values;
+      const username = localStorage.getItem('userName');
 
       const message = {
         body,
         channelId: 1,
-        username: 'admin',
+        username,
       };
 
-      socket.emit('newMessage', message);
+      socket.emit('newMessage', message, (response) => {
+        console.log(response.status);
+      });
 
       resetForm({ message: '' });
     },

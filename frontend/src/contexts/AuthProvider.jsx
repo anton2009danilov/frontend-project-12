@@ -12,9 +12,13 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [userId]);
 
-  const logIn = () => setLoggedIn(true);
+  const logIn = (token, username) => {
+    localStorage.setItem('userId', JSON.stringify(token));
+    localStorage.setItem('userName', username);
+    setLoggedIn(true);
+  };
   const logOut = () => {
-    localStorage.removeItem('userId');
+    localStorage.clear();
     setLoggedIn(false);
   };
 

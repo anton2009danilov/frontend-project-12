@@ -9,8 +9,11 @@ const SocketContextProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   socket.on('newMessage', (payload) => {
-    console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
     dispatch(messagesActions.addMessage(payload));
+  });
+
+  socket.on('newChannel', (payload) => {
+    console.log(payload); // { id: 6, name: "new channel", removable: true }
   });
 
   return (

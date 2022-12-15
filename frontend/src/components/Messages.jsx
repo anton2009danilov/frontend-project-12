@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectors as messagesSelectors } from '../slices/messagesSlice';
 import { selectors as channelsSelectors } from '../slices/channelsSlice';
-// import { actions as channelsActions } from '../slices/channelsSlice';
 
 const Messages = () => {
   const { id: currentChannelId } = useSelector((state) => state.currentChannel);
@@ -13,9 +12,8 @@ const Messages = () => {
   const messages = useSelector(messagesSelectors.selectAll)
     .filter(({ channelId }) => channelId === currentChannelId);
 
-  // const { length: messagesCount } = messages;
-
   const channelTitle = `# ${channelName}`;
+
   const messagesCountDisplay = `${messages.length} сообщений`;
 
   const renderMessages = () => messages.map(({ id, body, username }) => (
@@ -26,8 +24,6 @@ const Messages = () => {
       {body}
     </div>
   ));
-
-  console.log(messages);
 
   return (
     <>

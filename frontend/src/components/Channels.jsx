@@ -6,7 +6,6 @@ import Channel from './Channel';
 
 const Channels = () => {
   const channels = useSelector(selectors.selectAll);
-  // console.log(channels);
 
   return (
     <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">

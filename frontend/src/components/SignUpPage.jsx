@@ -7,12 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
+import cn from 'classnames';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks';
 
-const Login = () => {
+const SignUp = () => {
   const auth = useAuth();
-  const [authError, setAuthError] = useState(false);
+  const [signUpError, setSignUpError] = useState('');
   const inputRef = useRef();
   const navigate = useNavigate();
 
@@ -23,26 +24,30 @@ const Login = () => {
   const validationSchema = yup.object().shape({
     username: yup.string()
       .required('Обязательное поле')
-      .min(3)
-      .max(20),
+      .min(3, 'От 3 до 20 символов')
+      .max(20, 'От 3 до 20 символов'),
     password: yup.string()
       .required('Обязательное поле')
-      .min(5),
+      .min(6, 'Не менее 6 символов'),
+    retypePassword: yup.string()
+      .required('Пароли должны совпадать')
+      .oneOf([yup.ref('password')], 'Пароли должны совпадать'),
   });
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
+      retypePassword: '',
     },
     validationSchema,
     validateOnChange: false,
     onSubmit: async (values) => {
-      setAuthError(false);
+      setSignUpError('');
       const { username, password } = values;
       console.log(username, password);
 
-      axios.post('/api/v1/login', { username, password }).then((response) => {
+      axios.post('/api/v1/signup', { username, password }).then((response) => {
         console.log(response.data);
         auth.logIn(response.data, username);
         navigate('/');
@@ -50,10 +55,22 @@ const Login = () => {
         .catch((e) => {
           console.log(e);
           formik.setSubmitting(false);
-          setAuthError(true);
+          setSignUpError('Ошибка регистрации');
           inputRef.current.select();
         });
     },
+  });
+
+  const usernameFieldClass = cn({
+    'is-invalid': formik.errors.username,
+  });
+
+  const passwordFieldClass = cn({
+    'is-invalid': formik.errors.password,
+  });
+
+  const retypePasswordFieldClass = cn({
+    'is-invalid': formik.errors.retypePassword,
   });
 
   return (
@@ -63,52 +80,66 @@ const Login = () => {
           <Card>
             <Card.Body>
               <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Имя пользователя</Form.Label>
+                <h1 className="text-center mb-4">Регистрация</h1>
+                <Form.Group className="mb-3 form-floating">
                   <Form.Control
                     id="username"
                     name="username"
                     type="text"
-                    placeholder="Введите имя пользователя"
+                    placeholder="От 3 до 20 символов"
+                    className={usernameFieldClass}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     ref={inputRef}
                     required
+                    noValidate
                   />
-                  <Form.Text className="text-danger">
+                  <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+                  <Form.Text className="invalid-tooltip">
                     {formik.errors.username}
                   </Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>Пароль</Form.Label>
+                <Form.Group className="mb-3 form-floating">
                   <Form.Control
                     id="password"
                     name="password"
                     type="password"
                     placeholder="Введите пароль"
+                    className={passwordFieldClass}
                     onChange={formik.handleChange}
                     required
+                    noValidate
                   />
-                  <Form.Text className="text-danger">
+                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Text className="invalid-tooltip">
                     {formik.errors.password}
                   </Form.Text>
+                </Form.Group>
+                <Form.Group className="mb-3 form-floating">
+                  <Form.Control
+                    id="retypePassword"
+                    name="retypePassword"
+                    type="password"
+                    placeholder="Подтвердите пароль"
+                    className={retypePasswordFieldClass}
+                    onChange={formik.handleChange}
+                    required
+                    noValidate
+                  />
+                  <Form.Label htmlFor="retypePassword">Подтвердите пароль</Form.Label>
+                  <Form.Text className="invalid-tooltip">
+                    {formik.errors.retypePassword}
+                  </Form.Text>
                   <Form.Text className="text-danger">
-                    {authError && 'Ошибка авторизации'}
+                    {signUpError}
                   </Form.Text>
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                  Submit
+                  Зарегистрироваться
                 </Button>
               </Form>
             </Card.Body>
-            <Card.Footer className="p-4">
-              <div className="text-center">
-                <span>Нет аккаунта?</span>
-                {' '}
-                <a href="/signup">Регистрация</a>
-              </div>
-            </Card.Footer>
           </Card>
         </div>
       </div>
@@ -117,4 +148,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

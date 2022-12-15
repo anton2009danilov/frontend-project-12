@@ -12,6 +12,7 @@ import Login from './LoginPage';
 import ErrorPage from './ErrorPage';
 import AuthProvider from '../contexts/AuthProvider';
 import SocketProvider from '../contexts/SocketProvider';
+import SignUp from './SignUpPage';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
   {
     path: 'login',
     element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: 'signup',
+    element: <SignUp />,
     errorElement: <ErrorPage />,
   },
 ]);
