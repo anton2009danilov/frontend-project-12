@@ -70,7 +70,7 @@ const SignUp = () => {
   });
 
   const retypePasswordFieldClass = cn({
-    'is-invalid': formik.errors.retypePassword,
+    'is-invalid': signUpError || formik.errors.retypePassword,
   });
 
   return (
@@ -78,7 +78,7 @@ const SignUp = () => {
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <Card>
-            <Card.Body>
+            <Card.Body className="row p-5">
               <Form onSubmit={formik.handleSubmit}>
                 <h1 className="text-center mb-4">Регистрация</h1>
                 <Form.Group className="mb-3 form-floating">
