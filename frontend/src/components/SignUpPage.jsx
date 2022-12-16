@@ -10,6 +10,7 @@ import axios from 'axios';
 import cn from 'classnames';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks';
+import signUpImage from '../images/signup.jpg';
 
 const SignUp = () => {
   const auth = useAuth();
@@ -79,7 +80,10 @@ const SignUp = () => {
         <div className="col-12 col-md-8 col-xxl-6">
           <Card>
             <Card.Body className="row p-5">
-              <Form onSubmit={formik.handleSubmit}>
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img src={signUpImage} className="rounded-circle" alt="Войти" />
+              </div>
+              <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">Регистрация</h1>
                 <Form.Group className="mb-3 form-floating">
                   <Form.Control
