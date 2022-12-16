@@ -4,6 +4,7 @@ import {
   // useRef,
   useEffect,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   useDispatch,
 } from 'react-redux';
@@ -16,11 +17,24 @@ import Messages from './Messages';
 import MessageForm from './MessageForm';
 
 const Root = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { token } = JSON.parse(localStorage.getItem('userId'));
+  const { token } = localStorage.getItem('userId') ? JSON.parse(localStorage.getItem('userId')) : '';
+
+  const loader = (async () => {
+    const { userId } = window.localStorage;
+
+    if (!userId) {
+      return navigate('/login');
+    }
+
+    return null;
+  });
 
   useEffect(() => {
+    loader();
+
     const fetchData = async () => {
       const { data } = await axios.get(
         '/api/v1/data',
@@ -31,8 +45,6 @@ const Root = () => {
         },
       );
 
-      // console.log(data);
-      // const normalizedData = getNormalized(data);
       const {
         currentChannelId,
         channels,
@@ -46,8 +58,6 @@ const Root = () => {
 
     fetchData();
   });
-
-  // return 'main';
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">

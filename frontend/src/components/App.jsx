@@ -1,8 +1,18 @@
 import React from 'react';
+// import {
+//   createBrowserRouter,
+//   redirect,
+//   RouterProvider,
+// } from 'react-router-dom';
 import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  // useRouteError,
+  // redirect,
+  // Link,
+  // Navigate,
+  // useLocation,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
@@ -14,41 +24,23 @@ import AuthProvider from '../contexts/AuthProvider';
 import SocketProvider from '../contexts/SocketProvider';
 import SignUp from './SignUpPage';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    loader: async () => {
-      const { userId } = window.localStorage;
-
-      if (!userId) {
-        return redirect('/login');
-      }
-
-      return null;
-    },
-  },
-  {
-    path: 'login',
-    element: <Login />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: 'signup',
-    element: <SignUp />,
-    errorElement: <ErrorPage />,
-  },
-]);
-
 const App = () => (
   <React.StrictMode>
     <SocketProvider>
       <AuthProvider>
-        <div className="d-flex flex-column h-100">
-          <Header />
-          <RouterProvider router={router} />
-        </div>
+        <Router>
+          <div className="d-flex flex-column h-100">
+            <Header />
+            <Routes>
+              <Route path="/" errorElement={<ErrorPage />}>
+                <Route index element={<Root />} />
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Route>
+            </Routes>
+          </div>
+        </Router>
       </AuthProvider>
     </SocketProvider>
   </React.StrictMode>
