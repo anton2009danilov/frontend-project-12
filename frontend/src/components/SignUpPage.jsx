@@ -46,7 +46,6 @@ const SignUp = () => {
     onSubmit: async (values) => {
       setSignUpError('');
       const { username, password } = values;
-      console.log(username, password);
 
       axios.post('/api/v1/signup', { username, password }).then((response) => {
         console.log(response.data);
@@ -95,7 +94,6 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     ref={inputRef}
-                    required
                     noValidate
                   />
                   <Form.Label htmlFor="username">Имя пользователя</Form.Label>
@@ -112,7 +110,6 @@ const SignUp = () => {
                     placeholder="Введите пароль"
                     className={passwordFieldClass}
                     onChange={formik.handleChange}
-                    required
                     noValidate
                   />
                   <Form.Label htmlFor="password">Пароль</Form.Label>
@@ -128,7 +125,6 @@ const SignUp = () => {
                     placeholder="Подтвердите пароль"
                     className={retypePasswordFieldClass}
                     onChange={formik.handleChange}
-                    required
                     noValidate
                   />
                   <Form.Label htmlFor="retypePassword">Подтвердите пароль</Form.Label>
@@ -139,7 +135,7 @@ const SignUp = () => {
                     {signUpError}
                   </Form.Text>
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="outline-primary" className="w-100 mb-3" type="submit">
                   Зарегистрироваться
                 </Button>
               </Form>

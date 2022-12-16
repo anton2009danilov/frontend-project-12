@@ -5,6 +5,7 @@ import { actions as messagesActions } from '../slices/messagesSlice';
 import { SocketContext } from '.';
 
 const SocketContextProvider = ({ children }) => {
+  console.log('socket init');
   const socket = io('ws://localhost:3000');
   const dispatch = useDispatch();
 
