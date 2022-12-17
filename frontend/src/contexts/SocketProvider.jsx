@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { actions as messagesActions } from '../slices/messagesSlice';
+import { actions as channelsActions } from '../slices/channelsSlice';
 import { SocketContext } from '.';
 
 const SocketContextProvider = ({ children }) => {
@@ -13,7 +14,7 @@ const SocketContextProvider = ({ children }) => {
   });
 
   socket.on('newChannel', (payload) => {
-    console.log(payload); // { id: 6, name: "new channel", removable: true }
+    dispatch(channelsActions.addChannel(payload));
   });
 
   return (

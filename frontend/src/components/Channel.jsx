@@ -23,6 +23,7 @@ const Channel = ({ channel }) => {
     'rounded-0',
     'text-start',
     'btn',
+    'text-truncate',
     { 'btn-secondary': id === currentChannelId },
   );
 

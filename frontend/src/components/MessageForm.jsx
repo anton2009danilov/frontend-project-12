@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 // import {
 //   Form,
 // } from 'react-bootstrap';
-
 import { useSocket } from '../hooks';
 import ArrowRightIcon from '../images/arrow-right-icon.svg';
 
@@ -35,8 +34,6 @@ const MessageForm = () => {
       resetForm({ message: '' });
     },
   });
-
-  // const formClass = cn('py-1', 'border', 'rounded-2');
 
   return (
     <div className="mt-auto px-5 py-3">
