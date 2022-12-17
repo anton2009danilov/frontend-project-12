@@ -5,7 +5,6 @@ import { actions as messagesActions } from '../slices/messagesSlice';
 import { SocketContext } from '.';
 
 const SocketContextProvider = ({ children }) => {
-  console.log('socket init');
   const socket = io();
   const dispatch = useDispatch();
 

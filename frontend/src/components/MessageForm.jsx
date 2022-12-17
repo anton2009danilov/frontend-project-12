@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 // import cn from 'classnames';
 // import {
 //   Form,
@@ -11,6 +12,8 @@ import ArrowRightIcon from '../images/arrow-right-icon.svg';
 const MessageForm = () => {
   const { socket } = useSocket();
 
+  const { id: channelId } = useSelector((state) => state.currentChannel);
+
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -21,7 +24,7 @@ const MessageForm = () => {
 
       const message = {
         body,
-        channelId: 1,
+        channelId,
         username,
       };
 
