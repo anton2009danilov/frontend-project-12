@@ -1,8 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from 'react-bootstrap';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
-// import { selectors } from '../slices/channelsSlice';
 
 const Channel = ({ channel }) => {
   const dispatch = useDispatch();
@@ -29,10 +29,10 @@ const Channel = ({ channel }) => {
 
   return (
     <li className="nav-item w-100">
-      <button onClick={onClick} type="button" className={btnClass}>
+      <Button onClick={onClick} type="button" className={btnClass}>
         <span className="me-1">#</span>
         { name }
-      </button>
+      </Button>
     </li>
   );
 };
