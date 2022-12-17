@@ -6,7 +6,7 @@ import { SocketContext } from '.';
 
 const SocketContextProvider = ({ children }) => {
   console.log('socket init');
-  const socket = io('ws://localhost:3000');
+  const socket = io();
   const dispatch = useDispatch();
 
   socket.on('newMessage', (payload) => {
