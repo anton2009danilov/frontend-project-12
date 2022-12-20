@@ -7,20 +7,19 @@ import {
 } from 'react-bootstrap';
 import cn from 'classnames';
 import * as yup from 'yup';
+import { useSelector } from 'react-redux';
+import { selectors as channelsSelectors } from '../slices/channelsSlice';
 import { useSocket } from '../hooks';
 
 const Add = (props) => {
   const { socket } = useSocket();
-
-  const { show, setShow, channels } = props;
-
-  const inputElement = useRef(null);
+  const { onHide } = props;
+  const channels = useSelector(channelsSelectors.selectAll);
+  const inputElement = useRef();
 
   useEffect(() => {
-    if (show) {
-      inputElement.current.focus();
-    }
-  });
+    inputElement.current.focus();
+  }, []);
 
   const validationSchema = yup.object().shape({
     name: yup.string()
@@ -50,7 +49,7 @@ const Add = (props) => {
       socket.emit('newChannel', { name }, (response) => {
         console.log(response);
       });
-      setShow(false);
+      onHide();
     },
   });
 
@@ -59,14 +58,14 @@ const Add = (props) => {
   });
 
   return (
-    <Modal centered show={show} onHide={() => setShow(false)}>
-      <Modal.Header>
+    <Modal centered show onHide={onHide}>
+      <Modal.Header closeButton>
         <Modal.Title>Добавить канал</Modal.Title>
-        <Button type="button" onClick={() => setShow(false)} className="btn-close" aria-label="Close" />
       </Modal.Header>
+
       <Modal.Body>
-        <Form onSubmit={formik.handleSubmit}>
-          <FormGroup className="form-group">
+        <form onSubmit={formik.handleSubmit}>
+          <FormGroup>
             <FormControl
               className={nameFieldClass}
               ref={inputElement}
@@ -80,11 +79,11 @@ const Add = (props) => {
             <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
             <div className="invalid-feedback">{formik.errors.name}</div>
             <div className="d-flex justify-content-end">
-              <Button onClick={() => setShow(false)} variant="secondary" className="me-2">Отменить</Button>
+              <Button onClick={onHide} variant="secondary" className="me-2">Отменить</Button>
               <Button type="submit">Отправить</Button>
             </div>
           </FormGroup>
-        </Form>
+        </form>
       </Modal.Body>
     </Modal>
   );

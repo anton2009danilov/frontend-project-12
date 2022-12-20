@@ -1,17 +1,30 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { selectors } from '../slices/channelsSlice';
+import { selectors as channelsSelectors } from '../slices/channelsSlice';
 import { ReactComponent as PlusIcon } from '../images/plus-icon.svg';
 import Channel from './Channel';
 import getModal from '../modals/index.js';
 
+const renderChannel = ({ channel, showModal }) => (
+  <Channel key={channel.id} channel={channel} showModal={showModal} />
+);
+
+const renderModal = (({ modalInfo, hideModal }) => {
+  if (!modalInfo.type) {
+    return null;
+  }
+
+  const Modal = getModal(modalInfo.type);
+  return <Modal modalInfo={modalInfo} onHide={hideModal} />;
+});
+
 const Channels = () => {
-  const addingModal = getModal('adding');
+  const [modalInfo, setModalInfo] = useState({ type: null, item: null });
+  const hideModal = () => setModalInfo({ type: null, item: null });
+  const showModal = (type, item = null) => setModalInfo({ type, item });
 
-  const [showAddingModal, setShowAddingModal] = useState(false);
-
-  const channels = useSelector(selectors.selectAll);
+  const channels = useSelector(channelsSelectors.selectAll);
 
   return (
     <>
@@ -22,22 +35,18 @@ const Channels = () => {
             variant="primary"
             type="button"
             className="p-0 text-primary bg-light border-0 btn-group-vertical"
-            onClick={() => setShowAddingModal(true)}
+            onClick={() => showModal('adding')}
           >
             <PlusIcon className="bg-light m-1" />
             <span className="visually-hidden">+</span>
           </Button>
         </div>
         <ul className="nav flex-column nav-pills nav-fill px-2">
-          {channels.map((channel) => <Channel key={channel.id} channel={channel} />)}
+          {channels.map((channel) => renderChannel({ channel, showModal }))}
         </ul>
       </div>
 
-      {addingModal({
-        show: showAddingModal,
-        setShow: setShowAddingModal,
-        channels,
-      })}
+      {renderModal({ modalInfo, hideModal })}
     </>
   );
 };
