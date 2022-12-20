@@ -6,11 +6,7 @@ import {
 } from 'react-bootstrap';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 
-const Channel = ({
-  channel,
-  // showModal,
-}) => {
-  console.log(channel);
+const Channel = ({ channel, showModal }) => {
   const dispatch = useDispatch();
 
   const { id: currentChannelId } = useSelector((state) => state.currentChannel);
@@ -18,7 +14,7 @@ const Channel = ({
   const {
     name,
     id,
-    // removable,
+    removable,
   } = channel;
 
   const onClick = () => {
@@ -35,6 +31,15 @@ const Channel = ({
     'text-truncate',
   );
 
+  const renderDropdown = () => (removable
+    ? (
+      <DropdownButton title="" variant={btnVariant} as={ButtonGroup}>
+        <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="1">Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="2">Переименовать</Dropdown.Item>
+      </DropdownButton>
+    )
+    : null);
+
   return (
     <li className="nav-item w-100">
       <ButtonGroup className="w-100">
@@ -42,10 +47,7 @@ const Channel = ({
           <span className="me-1">#</span>
           { name }
         </Button>
-        <DropdownButton variant={btnVariant} as={ButtonGroup}>
-          <Dropdown.Item eventKey="1">Dropdown link</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Dropdown link</Dropdown.Item>
-        </DropdownButton>
+        {renderDropdown()}
       </ButtonGroup>
     </li>
   );

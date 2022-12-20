@@ -17,6 +17,10 @@ const SocketContextProvider = ({ children }) => {
     dispatch(channelsActions.addChannel(payload));
   });
 
+  socket.on('removeChannel', ({ id }) => {
+    dispatch(channelsActions.removeChannel(id));
+  });
+
   return (
     <SocketContext.Provider value={useMemo(() => ({ socket }), [socket])}>
       {children}
