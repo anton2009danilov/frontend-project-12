@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { actions as messagesActions } from '../slices/messagesSlice';
 import { actions as channelsActions } from '../slices/channelsSlice';
+import { setCurrentChannel } from '../slices/currentChannelSlice';
 import { SocketContext } from '.';
 
 const SocketContextProvider = ({ children }) => {
@@ -15,6 +16,7 @@ const SocketContextProvider = ({ children }) => {
 
   socket.on('newChannel', (payload) => {
     dispatch(channelsActions.addChannel(payload));
+    dispatch(setCurrentChannel(payload.id));
   });
 
   socket.on('removeChannel', ({ id }) => {
