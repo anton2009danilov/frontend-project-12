@@ -26,10 +26,6 @@ const Channels = () => {
 
   const channels = useSelector(channelsSelectors.selectAll);
 
-  useEffect(() => {
-    console.log(channels);
-  }, [channels]);
-
   return (
     <>
       <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
