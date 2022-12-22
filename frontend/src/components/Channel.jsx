@@ -11,11 +11,7 @@ const Channel = ({ channel, showModal }) => {
 
   const { id: currentChannelId } = useSelector((state) => state.currentChannel);
 
-  const {
-    name,
-    id,
-    removable,
-  } = channel;
+  const { id, name, removable } = channel;
 
   const onClick = () => {
     dispatch(setCurrentChannel(id));

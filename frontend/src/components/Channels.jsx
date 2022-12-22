@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { selectors as channelsSelectors } from '../slices/channelsSlice';
@@ -25,6 +25,10 @@ const Channels = () => {
   const showModal = (type, item = null) => setModalInfo({ type, item });
 
   const channels = useSelector(channelsSelectors.selectAll);
+
+  useEffect(() => {
+    console.log(channels);
+  }, [channels]);
 
   return (
     <>
