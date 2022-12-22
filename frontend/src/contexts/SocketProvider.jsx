@@ -6,6 +6,8 @@ import { actions as channelsActions } from '../slices/channelsSlice';
 import { setCurrentChannel } from '../slices/currentChannelSlice';
 import { SocketContext } from '.';
 
+const defaultChannelId = 1;
+
 const SocketContextProvider = ({ children }) => {
   const socket = io();
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const SocketContextProvider = ({ children }) => {
 
   socket.on('removeChannel', ({ id }) => {
     dispatch(channelsActions.removeChannel(id));
+    dispatch(setCurrentChannel(defaultChannelId));
   });
 
   socket.on('renameChannel', (payload) => {
