@@ -6,6 +6,7 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  useSelector,
   useDispatch,
 } from 'react-redux';
 import { actions as channelsActions } from '../slices/channelsSlice';
@@ -19,6 +20,8 @@ import MessageForm from './MessageForm';
 const Root = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { id: initialChannelId } = useSelector((state) => state.currentChannel);
 
   const { token } = localStorage.getItem('userId') ? JSON.parse(localStorage.getItem('userId')) : '';
 
@@ -59,19 +62,21 @@ const Root = () => {
     fetchData();
   });
 
-  return (
-    <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      <div className="row h-100 bg-white flex-md-row">
-        <Channels />
-        <div className="col p-0 h-100">
-          <div className="d-flex flex-column h-100">
-            <Messages />
-            <MessageForm />
+  return initialChannelId
+    ? (
+      <div className="container h-100 my-4 overflow-hidden rounded shadow">
+        <div className="row h-100 bg-white flex-md-row">
+          <Channels />
+          <div className="col p-0 h-100">
+            <div className="d-flex flex-column h-100">
+              <Messages />
+              <MessageForm />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    )
+    : null;
 };
 
 export default Root;
