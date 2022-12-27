@@ -4,7 +4,7 @@ import { selectors as messagesSelectors } from '../slices/messagesSlice';
 import { selectors as channelsSelectors } from '../slices/channelsSlice';
 
 const Messages = () => {
-  const { id: currentChannelId } = useSelector((state) => state.currentChannel);
+  const { currentChannelId } = useSelector((state) => state.ui);
 
   const { name: channelName } = useSelector((state) => channelsSelectors
     .selectById(state, currentChannelId)) ?? '';

@@ -11,7 +11,7 @@ import {
 } from 'react-redux';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import { actions as messagesActions } from '../slices/messagesSlice';
-import { setCurrentChannel } from '../slices/currentChannelSlice';
+import { setCurrentChannelId } from '../slices/userInterfaceSlice';
 import Channels from './Channels';
 import Messages from './Messages';
 
@@ -21,7 +21,7 @@ const Root = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { id: initialChannelId } = useSelector((state) => state.currentChannel);
+  const { currentChannelId: initialChannelId } = useSelector((state) => state.ui);
 
   const { token } = localStorage.getItem('userId') ? JSON.parse(localStorage.getItem('userId')) : '';
 
@@ -56,11 +56,11 @@ const Root = () => {
 
       dispatch(channelsActions.addChannels(channels));
       dispatch(messagesActions.addMessages(messages));
-      dispatch(setCurrentChannel(currentChannelId));
+      dispatch(setCurrentChannelId(currentChannelId));
     };
 
     fetchData();
-  });
+  }, []);
 
   return initialChannelId
     ? (

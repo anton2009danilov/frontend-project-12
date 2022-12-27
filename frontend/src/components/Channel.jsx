@@ -4,17 +4,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, ButtonGroup, Dropdown, DropdownButton,
 } from 'react-bootstrap';
-import { setCurrentChannel } from '../slices/currentChannelSlice';
+import { setCurrentChannelId } from '../slices/userInterfaceSlice';
 
 const Channel = ({ channel, showModal }) => {
   const dispatch = useDispatch();
 
-  const { id: currentChannelId } = useSelector((state) => state.currentChannel);
+  const { currentChannelId } = useSelector((state) => state.ui);
+  console.log(useSelector((state) => state.ui), currentChannelId);
 
   const { id, name, removable } = channel;
 
   const onClick = () => {
-    dispatch(setCurrentChannel(id));
+    dispatch(setCurrentChannelId(id));
   };
 
   const btnVariant = id === currentChannelId ? 'secondary' : 'light';

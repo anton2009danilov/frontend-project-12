@@ -11,7 +11,7 @@ import ArrowRightIcon from '../images/arrow-right-icon.svg';
 const MessageForm = () => {
   const { socket } = useSocket();
 
-  const { id: channelId } = useSelector((state) => state.currentChannel);
+  const { currentChannelId: channelId } = useSelector((state) => state.ui);
 
   const formik = useFormik({
     initialValues: {

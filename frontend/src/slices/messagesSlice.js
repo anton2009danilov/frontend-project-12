@@ -14,7 +14,6 @@ export const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(ChannelsActions.removeChannel, (state, action) => {
-      console.log(state, action.payload);
       const restMessages = Object.values(state.entities)
         .filter(({ channelId }) => channelId !== action.payload);
       messagesAdapter.setAll(state, restMessages);

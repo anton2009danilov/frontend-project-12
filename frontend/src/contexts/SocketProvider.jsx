@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { actions as messagesActions } from '../slices/messagesSlice';
 import { actions as channelsActions } from '../slices/channelsSlice';
-import { setCurrentChannel } from '../slices/currentChannelSlice';
+import { setCurrentChannelId } from '../slices/userInterfaceSlice';
 import { SocketContext } from '.';
 
 const defaultChannelId = 1;
@@ -18,16 +18,15 @@ const SocketContextProvider = ({ children }) => {
 
   socket.on('newChannel', (payload) => {
     dispatch(channelsActions.addChannel(payload));
-    dispatch(setCurrentChannel(payload.id));
+    dispatch(setCurrentChannelId(payload.id));
   });
 
   socket.on('removeChannel', ({ id }) => {
     dispatch(channelsActions.removeChannel(id));
-    dispatch(setCurrentChannel(defaultChannelId));
+    dispatch(setCurrentChannelId(defaultChannelId));
   });
 
   socket.on('renameChannel', (payload) => {
-    console.log(payload);
     dispatch(channelsActions.setChannel(payload));
   });
 
