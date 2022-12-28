@@ -14,6 +14,7 @@ export default {
       login: 'Войти',
       signup: 'Регистрация',
       noAccount: 'Нет аккаунта?',
+      headerLogo: 'Hexlet Chat',
     },
     form: {
       placeholders: {
