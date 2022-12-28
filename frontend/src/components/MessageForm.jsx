@@ -55,7 +55,7 @@ const MessageForm = () => {
             value={formik.values.message}
             disabled={loadingStatus === 'loading'}
           />
-          <button type="submit" disabled={!formik.values.message} className="btn btn-group-vertical border-0">
+          <button type="submit" disabled={!formik.values.message || loadingStatus === 'loading'} className="btn btn-group-vertical border-0">
             <span className="visually-hidden">Отправить</span>
             <img src={ArrowRightIcon} alt="Plus Icon" />
           </button>

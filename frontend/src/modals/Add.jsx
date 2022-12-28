@@ -7,15 +7,19 @@ import {
 } from 'react-bootstrap';
 import cn from 'classnames';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
-import { selectors as channelsSelectors } from '../slices/channelsSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSocket } from '../hooks';
+import { setLoadingStatus } from '../slices/userInterfaceSlice';
+import { selectors as channelsSelectors } from '../slices/channelsSlice';
 
 const Add = (props) => {
   const { socket } = useSocket();
   const { onHide } = props;
+  const { loadingStatus } = useSelector((state) => state.ui);
   const channels = useSelector(channelsSelectors.selectAll);
   const inputElement = useRef();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     inputElement.current.focus();
@@ -46,8 +50,10 @@ const Add = (props) => {
     validationSchema,
     validateOnChange: false,
     onSubmit: ({ name }) => {
+      dispatch(setLoadingStatus('loading'));
       socket.emit('newChannel', { name }, (response) => {
         console.log(response);
+        dispatch(setLoadingStatus('idle'));
       });
       onHide();
     },
@@ -75,12 +81,15 @@ const Add = (props) => {
               onChange={formik.handleChange}
               value={formik.values.name}
               data-testid="input-body"
+              disabled={loadingStatus === 'loading'}
             />
             <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
             <div className="invalid-feedback">{formik.errors.name}</div>
             <div className="d-flex justify-content-end">
-              <Button onClick={onHide} variant="secondary" className="me-2">Отменить</Button>
-              <Button type="submit">Отправить</Button>
+              <Button onClick={onHide} variant="secondary" className="me-2">
+                Отменить
+              </Button>
+              <Button disabled={loadingStatus === 'loading'} type="submit">Отправить</Button>
             </div>
           </FormGroup>
         </form>

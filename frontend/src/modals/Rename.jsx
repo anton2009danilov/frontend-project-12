@@ -7,12 +7,15 @@ import {
 } from 'react-bootstrap';
 import cn from 'classnames';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectors as channelsSelectors } from '../slices/channelsSlice';
+import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import { useSocket } from '../hooks';
 
 const Rename = (props) => {
   const { socket } = useSocket();
+  const dispatch = useDispatch();
+  const { loadingStatus } = useSelector((state) => state.ui);
   const { onHide, modalInfo: { item } } = props;
   const channels = useSelector(channelsSelectors.selectAll);
   const inputElement = useRef();
@@ -46,8 +49,10 @@ const Rename = (props) => {
     validationSchema,
     validateOnChange: false,
     onSubmit: ({ name }) => {
+      dispatch(setLoadingStatus('loading'));
       socket.emit('renameChannel', { id: item.id, name }, (response) => {
         console.log(response);
+        dispatch(setLoadingStatus('idle'));
       });
       onHide();
     },
@@ -75,12 +80,13 @@ const Rename = (props) => {
               onChange={formik.handleChange}
               value={formik.values.name}
               data-testid="input-body"
+              disabled={loadingStatus === 'loading'}
             />
             <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
             <div className="invalid-feedback">{formik.errors.name}</div>
             <div className="d-flex justify-content-end">
               <Button onClick={onHide} variant="secondary" className="me-2">Отменить</Button>
-              <Button type="submit">Отправить</Button>
+              <Button disabled={!formik.values.name || loadingStatus === 'loading'} type="submit">Отправить</Button>
             </div>
           </FormGroup>
         </form>
