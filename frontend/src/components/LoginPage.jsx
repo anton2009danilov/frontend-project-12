@@ -27,11 +27,11 @@ const Login = () => {
   const validationSchema = yup.object().shape({
     username: yup.string()
       .required(t('yup.errors.required'))
-      .min(3, t('yup.errors.min_3'))
-      .max(20, t('yup.errors.max_20')),
+      .min(3, t('yup.errors.userNameLength'))
+      .max(20, t('yup.errors.userNameLength')),
     password: yup.string()
       .required(t('yup.errors.required'))
-      .min(6, t('yup.errors.min_6')),
+      .min(6, t('yup.errors.passwordLength')),
   });
 
   const formik = useFormik({
@@ -73,7 +73,7 @@ const Login = () => {
           <Card>
             <Card.Body className="row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={loginImage} className="rounded-circle" alt="Войти" />
+                <img src={loginImage} className="rounded-circle" alt={t('titles.login')} />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
                 <h1 className="text-center mb-4">{t('titles.login')}</h1>
@@ -82,14 +82,14 @@ const Login = () => {
                     id="username"
                     name="username"
                     type="text"
-                    placeholder={t('form.placeholders.userName')}
+                    placeholder={t('form.login.userName')}
                     className={usernameFieldClass}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     ref={inputRef}
                     required
                   />
-                  <Form.Label htmlFor="username">{t('form.labels.userName')}</Form.Label>
+                  <Form.Label htmlFor="username">{t('form.login.userName')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {formik.errors.username}
                   </Form.Text>
@@ -100,12 +100,12 @@ const Login = () => {
                     id="password"
                     name="password"
                     type="password"
-                    placeholder={t('form.placeholders.password')}
+                    placeholder={t('form.login.password')}
                     className={passwordFieldClass}
                     onChange={formik.handleChange}
                     required
                   />
-                  <Form.Label htmlFor="password">{t('form.labels.password')}</Form.Label>
+                  <Form.Label htmlFor="password">{t('form.login.password')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {authError || formik.errors.password}
                   </Form.Text>

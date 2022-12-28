@@ -2,12 +2,14 @@ export default {
   translation: {
     yup: {
       errors: {
+        userAlreadyExists: 'Такой пользователь уже существует',
+        authError: 'Неверные имя пользователя или пароль',
+        userNameLength: 'От 3 до 20 символов',
+        passwordLength: 'Не менее 6 символов',
+        passwordsDiffer: 'Пароли должны совпадать',
         required: 'Обязательное поле',
-        min_3: 'От 3 до 20 символов',
-        min_6: 'Не менее 6 символов',
-        max_20: 'От 3 до 20 символов',
-        authError: 'Ошибка авторизации',
-        alreadyExists: 'Ошибка',
+        signUpError: 'Ошибка регистрации',
+        networkError: 'Ошибка соединения',
       },
     },
     titles: {
@@ -17,18 +19,20 @@ export default {
       headerLogo: 'Hexlet Chat',
     },
     form: {
-      placeholders: {
-        userName: 'Введите имя пользователя',
-        password: 'Введите пароль',
+      login: {
+        userName: 'Ваш ник',
+        password: 'Пароль',
       },
-      labels: {
+      signup: {
         userName: 'Имя пользователя',
         password: 'Пароль',
+        retypePassword: 'Подтвердите пароль',
       },
     },
     buttonNames: {
       login: 'Войти',
       logout: 'Выйти',
+      signup: 'Зарегистрироваться',
     },
   },
 };
