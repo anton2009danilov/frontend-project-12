@@ -8,11 +8,13 @@ import { Form, Button, Card } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks';
 import loginImage from '../images/login.jfif';
 
 const Login = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const [authError, setAuthError] = useState('');
   const inputRef = useRef();
@@ -24,12 +26,12 @@ const Login = () => {
 
   const validationSchema = yup.object().shape({
     username: yup.string()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов'),
+      .required(t('yup.required'))
+      .min(3, t('yup.min_3'))
+      .max(20, t('yup.max_20')),
     password: yup.string()
-      .required('Обязательное поле')
-      .min(6, 'Не менее 6 символов'),
+      .required(t('yup.required'))
+      .min(6, t('yup.min_6')),
   });
 
   const formik = useFormik({
