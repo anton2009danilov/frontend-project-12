@@ -50,15 +50,24 @@ const SignUp = () => {
       const { username, password } = values;
 
       axios.post('/api/v1/signup', { username, password }).then((response) => {
-        console.log(response.data);
         auth.logIn(response.data, username);
         navigate('/');
       })
         .catch((e) => {
-          console.log(e);
           formik.setSubmitting(false);
-          setSignUpError(t('yup.errors.signUpError'));
           inputRef.current.select();
+
+          if (e.message === 'Request failed with status code 409') {
+            setSignUpError(t('yup.errors.userAlreadyExists'));
+            return;
+          }
+
+          if (e.message === 'Network Error') {
+            setSignUpError(t('yup.errors.networkError'));
+            return;
+          }
+
+          setSignUpError(t('yup.errors.requestError'));
         });
     },
   });

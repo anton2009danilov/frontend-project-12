@@ -8,8 +8,8 @@ export default {
         passwordLength: 'Не менее 6 символов',
         passwordsDiffer: 'Пароли должны совпадать',
         required: 'Обязательное поле',
-        signUpError: 'Ошибка регистрации',
         networkError: 'Ошибка соединения',
+        requestError: 'Запрос к серверу завершился с ошибкой',
       },
     },
     titles: {
