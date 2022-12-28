@@ -1,10 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-// import cn from 'classnames';
-// import {
-//   Form,
-// } from 'react-bootstrap';
 import { useSocket } from '../hooks';
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import ArrowRightIcon from '../images/arrow-right-icon.svg';

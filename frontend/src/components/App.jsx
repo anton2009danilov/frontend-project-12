@@ -1,18 +1,8 @@
 import React from 'react';
-// import {
-//   createBrowserRouter,
-//   redirect,
-//   RouterProvider,
-// } from 'react-router-dom';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  // useRouteError,
-  // redirect,
-  // Link,
-  // Navigate,
-  // useLocation,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
