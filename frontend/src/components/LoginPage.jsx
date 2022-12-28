@@ -26,12 +26,12 @@ const Login = () => {
 
   const validationSchema = yup.object().shape({
     username: yup.string()
-      .required(t('yup.required'))
-      .min(3, t('yup.min_3'))
-      .max(20, t('yup.max_20')),
+      .required(t('yup.errors.required'))
+      .min(3, t('yup.errors.min_3'))
+      .max(20, t('yup.errors.max_20')),
     password: yup.string()
-      .required(t('yup.required'))
-      .min(6, t('yup.min_6')),
+      .required(t('yup.errors.required'))
+      .min(6, t('yup.errors.min_6')),
   });
 
   const formik = useFormik({
@@ -44,17 +44,15 @@ const Login = () => {
     onSubmit: async (values) => {
       setAuthError('');
       const { username, password } = values;
-      console.log(username, password);
 
       axios.post('/api/v1/login', { username, password }).then((response) => {
-        console.log(response.data);
         auth.logIn(response.data, username);
         navigate('/');
       })
         .catch((e) => {
           console.log(e);
           formik.setSubmitting(false);
-          setAuthError('Ошибка авторизации');
+          setAuthError(t('yup.errors.authError'));
           inputRef.current.select();
         });
     },
@@ -78,20 +76,20 @@ const Login = () => {
                 <img src={loginImage} className="rounded-circle" alt="Войти" />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('titles.login')}</h1>
                 <Form.Group className="mb-3 form-floating">
                   <Form.Control
                     id="username"
                     name="username"
                     type="text"
-                    placeholder="Введите имя пользователя"
+                    placeholder={t('form.placeholders.userName')}
                     className={usernameFieldClass}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     ref={inputRef}
                     required
                   />
-                  <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+                  <Form.Label htmlFor="username">{t('form.labels.userName')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {formik.errors.username}
                   </Form.Text>
@@ -102,26 +100,26 @@ const Login = () => {
                     id="password"
                     name="password"
                     type="password"
-                    placeholder="Введите пароль"
+                    placeholder={t('form.placeholders.password')}
                     className={passwordFieldClass}
                     onChange={formik.handleChange}
                     required
                   />
-                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Label htmlFor="password">{t('form.labels.password')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {authError || formik.errors.password}
                   </Form.Text>
                 </Form.Group>
                 <Button variant="outline-primary" className="w-100 mb-3" type="submit">
-                  Войти
+                  {t('buttonNames.login')}
                 </Button>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
+                <span>{t('titles.noAccount')}</span>
                 {' '}
-                <Link to="/signup">Регистрация</Link>
+                <Link to="/signup">{t('titles.signup')}</Link>
               </div>
             </Card.Footer>
           </Card>
