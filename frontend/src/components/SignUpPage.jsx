@@ -34,7 +34,7 @@ const SignUp = () => {
       .min(6, t('yup.errors.passwordLength')),
     retypePassword: yup.string()
       .required(t('yup.errors.required'))
-      .oneOf([yup.ref('password')], 'yup.errors.passwordsDiffer'),
+      .oneOf([yup.ref('password')], t('yup.errors.passwordsDiffer')),
   });
 
   const formik = useFormik({
@@ -100,14 +100,14 @@ const SignUp = () => {
                     id="username"
                     name="username"
                     type="text"
-                    placeholder={t('form.signup.userName')}
+                    placeholder={t('forms.signup.userName')}
                     className={usernameFieldClass}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     ref={inputRef}
                     noValidate
                   />
-                  <Form.Label htmlFor="username">{t('form.signup.userName')}</Form.Label>
+                  <Form.Label htmlFor="username">{t('forms.signup.userName')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {formik.errors.username}
                   </Form.Text>
@@ -118,12 +118,12 @@ const SignUp = () => {
                     id="password"
                     name="password"
                     type="password"
-                    placeholder={t('form.signup.password')}
+                    placeholder={t('forms.signup.password')}
                     className={passwordFieldClass}
                     onChange={formik.handleChange}
                     noValidate
                   />
-                  <Form.Label htmlFor="password">{t('form.signup.password')}</Form.Label>
+                  <Form.Label htmlFor="password">{t('forms.signup.password')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {formik.errors.password}
                   </Form.Text>
@@ -133,12 +133,12 @@ const SignUp = () => {
                     id="retypePassword"
                     name="retypePassword"
                     type="password"
-                    placeholder={t('form.signup.retypePassword')}
+                    placeholder={t('forms.signup.retypePassword')}
                     className={retypePasswordFieldClass}
                     onChange={formik.handleChange}
                     noValidate
                   />
-                  <Form.Label htmlFor="retypePassword">{t('form.signup.retypePassword')}</Form.Label>
+                  <Form.Label htmlFor="retypePassword">{t('forms.signup.retypePassword')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {formik.errors.retypePassword}
                   </Form.Text>

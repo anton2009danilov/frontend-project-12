@@ -17,8 +17,9 @@ export default {
       signup: 'Регистрация',
       noAccount: 'Нет аккаунта?',
       headerLogo: 'Hexlet Chat',
+      pageNotFound: 'Страница не найдена',
     },
-    form: {
+    forms: {
       login: {
         userName: 'Ваш ник',
         password: 'Пароль',
@@ -28,11 +29,22 @@ export default {
         password: 'Пароль',
         retypePassword: 'Подтвердите пароль',
       },
+      newMessage: {
+        ariaLabel: 'Новое сообщение',
+        placeholder: 'Введите сообщение...',
+      },
     },
     buttonNames: {
       login: 'Войти',
       logout: 'Выйти',
       signup: 'Зарегистрироваться',
+      delete: 'Удалить',
+      rename: 'Переименовать',
+      send: 'Отправить',
+    },
+    links: {
+      toMainPage_title: 'Но вы можете перейти',
+      toMainPage_text: 'на главную страницу',
     },
   },
 };

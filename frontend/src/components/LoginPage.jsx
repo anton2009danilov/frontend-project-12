@@ -82,14 +82,14 @@ const Login = () => {
                     id="username"
                     name="username"
                     type="text"
-                    placeholder={t('form.login.userName')}
+                    placeholder={t('forms.login.userName')}
                     className={usernameFieldClass}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     ref={inputRef}
                     required
                   />
-                  <Form.Label htmlFor="username">{t('form.login.userName')}</Form.Label>
+                  <Form.Label htmlFor="username">{t('forms.login.userName')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {formik.errors.username}
                   </Form.Text>
@@ -100,12 +100,12 @@ const Login = () => {
                     id="password"
                     name="password"
                     type="password"
-                    placeholder={t('form.login.password')}
+                    placeholder={t('forms.login.password')}
                     className={passwordFieldClass}
                     onChange={formik.handleChange}
                     required
                   />
-                  <Form.Label htmlFor="password">{t('form.login.password')}</Form.Label>
+                  <Form.Label htmlFor="password">{t('forms.login.password')}</Form.Label>
                   <Form.Text className="invalid-tooltip">
                     {authError || formik.errors.password}
                   </Form.Text>

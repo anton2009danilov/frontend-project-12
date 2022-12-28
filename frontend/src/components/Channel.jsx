@@ -1,17 +1,16 @@
 import React from 'react';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Button, ButtonGroup, Dropdown, DropdownButton,
 } from 'react-bootstrap';
 import { setCurrentChannelId } from '../slices/userInterfaceSlice';
 
 const Channel = ({ channel, showModal }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const { currentChannelId } = useSelector((state) => state.ui);
-  console.log(useSelector((state) => state.ui), currentChannelId);
-
   const { id, name, removable } = channel;
 
   const onClick = () => {
@@ -31,8 +30,8 @@ const Channel = ({ channel, showModal }) => {
   const renderDropdown = () => (removable
     ? (
       <DropdownButton title="" variant={btnVariant} as={ButtonGroup}>
-        <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="1">Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="2">Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="1">{t('buttonNames.delete')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="2">{t('buttonNames.rename')}</Dropdown.Item>
       </DropdownButton>
     )
     : null);
