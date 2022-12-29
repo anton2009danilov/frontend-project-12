@@ -23,18 +23,16 @@ const Root = () => {
 
   const { token } = localStorage.getItem('userId') ? JSON.parse(localStorage.getItem('userId')) : '';
 
-  const loader = (async () => {
-    const { userId } = window.localStorage;
-
-    if (!userId) {
-      return navigate('/login');
-    }
-
-    return null;
-  });
-
   useEffect(() => {
-    loader();
+    const loader = (async () => {
+      const { userId } = window.localStorage;
+
+      if (!userId) {
+        return navigate('/login');
+      }
+
+      return null;
+    });
 
     const fetchData = async () => {
       const { data } = await axios.get(
@@ -57,8 +55,9 @@ const Root = () => {
       dispatch(setCurrentChannelId(currentChannelId));
     };
 
+    loader();
     fetchData();
-  }, []);
+  }, [dispatch, token, navigate]);
 
   return initialChannelId
     ? (
