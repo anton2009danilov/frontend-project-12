@@ -1,16 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { AuthContext } from '.';
 
+const { userId } = window.localStorage;
+
 const AuthContextProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const { userId } = window.localStorage;
-
-  useEffect(() => {
-    if (userId) {
-      setLoggedIn(true);
-    }
-  }, [userId]);
+  console.log('auth provider');
+  const [loggedIn, setLoggedIn] = useState(!!userId);
 
   const logIn = (token, username) => {
     localStorage.setItem('userId', JSON.stringify(token));
