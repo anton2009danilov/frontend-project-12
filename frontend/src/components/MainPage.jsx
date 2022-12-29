@@ -9,7 +9,7 @@ import {
 } from 'react-redux';
 import { actions as channelsActions } from '../slices/channelsSlice';
 import { actions as messagesActions } from '../slices/messagesSlice';
-import { setCurrentChannelId } from '../slices/userInterfaceSlice';
+import { setCurrentChannelId, setDefaultChannelId } from '../slices/userInterfaceSlice';
 import Channels from './Channels';
 import Messages from './Messages';
 
@@ -53,6 +53,7 @@ const Root = () => {
       dispatch(channelsActions.addChannels(channels));
       dispatch(messagesActions.addMessages(messages));
       dispatch(setCurrentChannelId(currentChannelId));
+      dispatch(setDefaultChannelId(currentChannelId));
     };
 
     loader();

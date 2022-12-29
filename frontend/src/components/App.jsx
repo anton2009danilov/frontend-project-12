@@ -4,8 +4,10 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from './Header';
 import Root from './MainPage';
 import Login from './LoginPage';
@@ -29,6 +31,7 @@ const App = () => (
                 <Route path="*" element={<ErrorPage />} />
               </Route>
             </Routes>
+            <ToastContainer />
           </div>
         </Router>
       </AuthProvider>

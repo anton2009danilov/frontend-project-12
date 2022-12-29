@@ -12,6 +12,11 @@ export default {
         requestError: 'Запрос к серверу завершился с ошибкой',
       },
     },
+    socketMessages: {
+      successfulChannelCreation: 'Канал создан',
+      successfulChannelRename: 'Канал переименован',
+      successfulChannelRemove: 'Канал удален',
+    },
     titles: {
       login: 'Войти',
       signup: 'Регистрация',

@@ -8,11 +8,14 @@ import {
 import cn from 'classnames';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectors as channelsSelectors } from '../slices/channelsSlice';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { selectors as channelsSelectors, actions as channelsActions } from '../slices/channelsSlice';
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import { useSocket } from '../hooks';
 
 const Rename = (props) => {
+  const { t } = useTranslation();
   const { socket } = useSocket();
   const dispatch = useDispatch();
   const { loadingStatus } = useSelector((state) => state.ui);
@@ -50,8 +53,12 @@ const Rename = (props) => {
     validateOnChange: false,
     onSubmit: ({ name }) => {
       dispatch(setLoadingStatus('loading'));
-      socket.emit('renameChannel', { id: item.id, name }, (response) => {
+      const payload = { id: item.id, name, removable: true };
+
+      socket.emit('renameChannel', payload, (response) => {
         console.log(response);
+        dispatch(channelsActions.setChannel(payload));
+        toast.success(t('socketMessages.successfulChannelRename'));
         dispatch(setLoadingStatus('idle'));
       });
       onHide();

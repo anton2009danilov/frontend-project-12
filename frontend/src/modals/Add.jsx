@@ -8,11 +8,14 @@ import {
 import cn from 'classnames';
 import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useSocket } from '../hooks';
-import { setLoadingStatus } from '../slices/userInterfaceSlice';
-import { selectors as channelsSelectors } from '../slices/channelsSlice';
+import { setLoadingStatus, setCurrentChannelId } from '../slices/userInterfaceSlice';
+import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice';
 
 const Add = (props) => {
+  const { t } = useTranslation();
   const { socket } = useSocket();
   const { onHide } = props;
   const { loadingStatus } = useSelector((state) => state.ui);
@@ -52,9 +55,13 @@ const Add = (props) => {
     onSubmit: ({ name }) => {
       dispatch(setLoadingStatus('loading'));
       socket.emit('newChannel', { name }, (response) => {
-        console.log(response);
+        const { data } = response;
+        dispatch(channelsActions.addChannel(data));
+        dispatch(setCurrentChannelId(data.id));
         dispatch(setLoadingStatus('idle'));
+        toast.success(t('socketMessages.successfulChannelCreation'));
       });
+
       onHide();
     },
   });

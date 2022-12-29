@@ -2,13 +2,19 @@ import React, { useEffect } from 'react';
 import {
   Modal, Button,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useSocket } from '../hooks';
-import { setLoadingStatus } from '../slices/userInterfaceSlice';
+import { actions as channelsActions } from '../slices/channelsSlice';
+import { setLoadingStatus, setCurrentChannelId } from '../slices/userInterfaceSlice';
 
 const Remove = (props) => {
+  const { t } = useTranslation();
   const { socket } = useSocket();
   const dispatch = useDispatch();
+
+  const { defaultChannelId } = useSelector((state) => state.ui);
   const { loadingStatus } = useSelector((state) => state.ui);
   const { onHide, modalInfo: { item } } = props;
 
@@ -16,9 +22,11 @@ const Remove = (props) => {
 
   const onClickDeleteBtn = () => {
     dispatch(setLoadingStatus('loading'));
-    socket.emit('removeChannel', { id: item.id }, (response) => {
-      console.log(response);
+    socket.emit('removeChannel', { id: item.id }, () => {
+      dispatch(setCurrentChannelId(defaultChannelId));
+      dispatch(channelsActions.removeChannel(item.id));
       dispatch(setLoadingStatus('idle'));
+      toast.success(t('socketMessages.successfulChannelRemove'));
     });
     onHide();
   };

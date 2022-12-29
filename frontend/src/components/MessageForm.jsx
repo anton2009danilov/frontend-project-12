@@ -28,8 +28,7 @@ const MessageForm = () => {
 
       dispatch(setLoadingStatus('loading'));
 
-      socket.emit('newMessage', message, (response) => {
-        console.log(response.status);
+      socket.emit('newMessage', message, () => {
         dispatch(setLoadingStatus('idle'));
       });
 
