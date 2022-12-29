@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import {
   useEffect,
 } from 'react';
@@ -7,9 +7,10 @@ import {
   useSelector,
   useDispatch,
 } from 'react-redux';
-import { actions as channelsActions } from '../slices/channelsSlice';
-import { actions as messagesActions } from '../slices/messagesSlice';
-import { setCurrentChannelId, setDefaultChannelId } from '../slices/userInterfaceSlice';
+import fetchInitialData from '../slices/fetchInitialData';
+// import { actions as channelsActions } from '../slices/channelsSlice';
+// import { actions as messagesActions } from '../slices/messagesSlice';
+// import { setCurrentChannelId, setDefaultChannelId } from '../slices/userInterfaceSlice';
 import Channels from './Channels';
 import Messages from './Messages';
 
@@ -34,30 +35,31 @@ const Root = () => {
       return null;
     });
 
-    const fetchData = async () => {
-      const { data } = await axios.get(
-        '/api/v1/data',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+    // const fetchData = async () => {
+    //   const { data } = await axios.get(
+    //     '/api/v1/data',
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     },
+    //   );
 
-      const {
-        currentChannelId,
-        channels,
-        messages,
-      } = data;
+    //   const {
+    //     currentChannelId,
+    //     channels,
+    //     messages,
+    //   } = data;
 
-      dispatch(channelsActions.addChannels(channels));
-      dispatch(messagesActions.addMessages(messages));
-      dispatch(setCurrentChannelId(currentChannelId));
-      dispatch(setDefaultChannelId(currentChannelId));
-    };
+    //   dispatch(channelsActions.addChannels(channels));
+    //   dispatch(messagesActions.addMessages(messages));
+    //   dispatch(setCurrentChannelId(currentChannelId));
+    //   dispatch(setDefaultChannelId(currentChannelId));
+    // };
 
     loader();
-    fetchData();
+    dispatch(fetchInitialData(token));
+    // fetchData();
   }, [dispatch, token, navigate]);
 
   return initialChannelId

@@ -1,4 +1,5 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import fetchInitialData from './fetchInitialData';
 
 const channelsAdapter = createEntityAdapter();
 
@@ -12,6 +13,13 @@ export const channelsSlice = createSlice({
     addChannels: channelsAdapter.addMany,
     removeChannel: channelsAdapter.removeOne,
     setChannel: channelsAdapter.setOne,
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchInitialData.fulfilled, (state, action) => {
+        const { channels } = action.payload;
+        channelsAdapter.addMany(state, channels);
+      });
   },
 });
 

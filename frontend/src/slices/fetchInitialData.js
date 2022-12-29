@@ -2,8 +2,10 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const fetchInitialData = createAsyncThunk(
-  'initial_data',
+  'fetchInitialData',
   async (userId) => {
+    console.log('fetch initial data');
+    console.log(userId);
     const response = await axios.get(
       '/api/v1/data',
       {
@@ -12,6 +14,8 @@ const fetchInitialData = createAsyncThunk(
         },
       },
     );
+
+    console.log(response);
 
     return response.data;
   },

@@ -1,6 +1,7 @@
 /* eslint no-param-reassign: 0 */
 
 import { createSlice } from '@reduxjs/toolkit';
+import fetchInitialData from './fetchInitialData';
 
 const initialState = {
   defaultChannelId: null,
@@ -25,6 +26,14 @@ const userInterfaceSlice = createSlice({
     setMessage(state, action) {
       state.message = action.message;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchInitialData.fulfilled, (state, action) => {
+        const { currentChannelId } = action.payload;
+        state.currentChannelId = currentChannelId;
+        state.defaultChannelId = currentChannelId;
+      });
   },
 });
 
