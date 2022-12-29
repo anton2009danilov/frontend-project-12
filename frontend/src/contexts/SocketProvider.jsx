@@ -14,7 +14,7 @@ const SocketContextProvider = ({ children }) => {
   });
 
   return (
-    <SocketContext.Provider value={useMemo(() => ({ socket }), [socket])}>
+    <SocketContext.Provider value={useMemo(() => ({ socket }), [])}>
       {children}
     </SocketContext.Provider>
   );
