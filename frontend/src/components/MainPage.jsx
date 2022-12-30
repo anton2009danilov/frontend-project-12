@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import {
   useEffect,
 } from 'react';
@@ -7,10 +6,6 @@ import {
   useSelector,
   useDispatch,
 } from 'react-redux';
-import fetchInitialData from '../slices/fetchInitialData';
-// import { actions as channelsActions } from '../slices/channelsSlice';
-// import { actions as messagesActions } from '../slices/messagesSlice';
-// import { setCurrentChannelId, setDefaultChannelId } from '../slices/userInterfaceSlice';
 import Channels from './Channels';
 import Messages from './Messages';
 
@@ -21,7 +16,6 @@ const Root = () => {
   const dispatch = useDispatch();
 
   const { currentChannelId: initialChannelId } = useSelector((state) => state.ui);
-
   const { token } = localStorage.getItem('userId') ? JSON.parse(localStorage.getItem('userId')) : '';
 
   useEffect(() => {
@@ -35,31 +29,7 @@ const Root = () => {
       return null;
     });
 
-    // const fetchData = async () => {
-    //   const { data } = await axios.get(
-    //     '/api/v1/data',
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     },
-    //   );
-
-    //   const {
-    //     currentChannelId,
-    //     channels,
-    //     messages,
-    //   } = data;
-
-    //   dispatch(channelsActions.addChannels(channels));
-    //   dispatch(messagesActions.addMessages(messages));
-    //   dispatch(setCurrentChannelId(currentChannelId));
-    //   dispatch(setDefaultChannelId(currentChannelId));
-    // };
-
     loader();
-    dispatch(fetchInitialData(token));
-    // fetchData();
   }, [dispatch, token, navigate]);
 
   return initialChannelId

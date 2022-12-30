@@ -10,11 +10,14 @@ import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import fetchInitialData from '../slices/fetchInitialData';
 import { useAuth } from '../hooks';
 import signUpImage from '../images/signup.jpg';
 
 const SignUp = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const auth = useAuth();
   const [signUpError, setSignUpError] = useState('');
   const inputRef = useRef();
@@ -51,6 +54,7 @@ const SignUp = () => {
 
       axios.post('/api/v1/signup', { username, password }).then((response) => {
         auth.logIn(response.data, username);
+        dispatch(fetchInitialData(response.data.token));
         navigate('/');
       })
         .catch((e) => {

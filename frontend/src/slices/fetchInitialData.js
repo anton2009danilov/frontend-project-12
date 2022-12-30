@@ -5,7 +5,7 @@ const fetchInitialData = createAsyncThunk(
   'fetchInitialData',
   async (userId) => {
     console.log('fetch initial data');
-    console.log(userId);
+
     const response = await axios.get(
       '/api/v1/data',
       {
@@ -14,8 +14,6 @@ const fetchInitialData = createAsyncThunk(
         },
       },
     );
-
-    console.log(response);
 
     return response.data;
   },
