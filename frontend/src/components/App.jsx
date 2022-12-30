@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './Header';
-import Root from './MainPage';
+import MainPage from './MainPage';
 import Login from './LoginPage';
 import ErrorPage from './ErrorPage';
 import AuthProvider from '../contexts/AuthProvider';
@@ -25,7 +25,7 @@ const App = () => (
             <Header />
             <Routes>
               <Route path="/" errorElement={<ErrorPage />}>
-                <Route index element={<Root />} />
+                <Route index element={<MainPage />} />
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="*" element={<ErrorPage />} />

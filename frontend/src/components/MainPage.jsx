@@ -9,7 +9,7 @@ import Messages from './Messages';
 
 import MessageForm from './MessageForm';
 
-const Root = () => {
+const MainPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -45,4 +45,4 @@ const Root = () => {
     : null;
 };
 
-export default Root;
+export default MainPage;
