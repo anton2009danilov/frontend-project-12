@@ -2,35 +2,31 @@ import {
   useEffect,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAuth } from '../hooks';
 import Channels from './Channels';
 import Messages from './Messages';
 
 import MessageForm from './MessageForm';
 
 const Root = () => {
+  const auth = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { currentChannelId: initialChannelId } = useSelector((state) => state.ui);
-  const { token } = localStorage.getItem('userId') ? JSON.parse(localStorage.getItem('userId')) : '';
 
   useEffect(() => {
-    const loader = (async () => {
-      const { userId } = window.localStorage;
+    console.log('useEffect');
+    const { userId: token, userName: username } = window.localStorage;
 
-      if (!userId) {
-        return navigate('/login');
-      }
+    if (!token) {
+      navigate('/login');
+    }
 
-      return null;
-    });
-
-    loader();
-  }, [dispatch, token, navigate]);
+    if (!initialChannelId) {
+      auth.logIn({ token, username }, username);
+    }
+  });
 
   return initialChannelId
     ? (
