@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { Provider as RollbarProvider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
@@ -21,13 +21,18 @@ import SignUp from './SignUpPage';
 
 const rollbarConfig = {
   accessToken: '3eed5cc9402645968aa38d291907b42f',
-  environment: 'testenv',
+  environment: 'production',
 };
 
-// const TestError = () => {
-//   const a = null;
-//   return a.kello();
-// };
+const ErrorDisplay = ({
+  error,
+  // resetError,
+}) => (
+  <div>
+    {error.message}
+    {/* <button type="button" onClick={() => resetError()}>reset error</button> */}
+  </div>
+);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,7 +45,7 @@ const App = () => {
   return (
     <React.StrictMode>
       <RollbarProvider config={rollbarConfig}>
-        <ErrorBoundary>
+        <ErrorBoundary level={LEVEL_WARN} fallbackUI={ErrorDisplay}>
           <SocketProvider>
             <AuthProvider>
               <Router>
@@ -57,7 +62,6 @@ const App = () => {
                   <ToastContainer />
                 </div>
               </Router>
-              {/* <TestError /> */}
             </AuthProvider>
           </SocketProvider>
         </ErrorBoundary>

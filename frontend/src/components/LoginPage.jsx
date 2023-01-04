@@ -22,6 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     inputRef.current.focus();
+    // throw (new Error('test error 2'));
   }, []);
 
   const validationSchema = yup.object().shape({
