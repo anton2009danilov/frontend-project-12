@@ -10,6 +10,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks';
+import routes from '../routes';
 import loginImage from '../images/login.jfif';
 
 const Login = () => {
@@ -32,7 +33,7 @@ const Login = () => {
       setAuthError('');
       const { username, password } = values;
 
-      return axios.post('/api/v1/login', { username, password })
+      return axios.post(routes.loginPath(), { username, password })
         .then((response) => {
           auth.logIn(response.data, username);
           navigate('/');

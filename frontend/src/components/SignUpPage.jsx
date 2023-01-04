@@ -11,6 +11,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks';
+import routes from '../routes';
 import signUpImage from '../images/signup.jpg';
 
 const SignUp = () => {
@@ -49,7 +50,7 @@ const SignUp = () => {
       setSignUpError('');
       const { username, password } = values;
 
-      axios.post('/api/v1/signup', { username, password }).then((response) => {
+      axios.post(routes.signupPath(), { username, password }).then((response) => {
         auth.logIn(response.data, username);
         navigate('/');
       })
