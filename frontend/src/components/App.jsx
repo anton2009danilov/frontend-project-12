@@ -26,7 +26,7 @@ const App = () => {
   useEffect(() => {
     console.log('dispatch(fetchInitialData(token))');
     dispatch(fetchInitialData(token));
-  }, []);
+  }, [dispatch, token]);
 
   return (
     <React.StrictMode>
