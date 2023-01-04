@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import { selectors as channelsSelectors, actions as channelsActions } from '../slices/channelsSlice';
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import { useSocket } from '../hooks';
@@ -53,7 +54,14 @@ const Rename = (props) => {
     validateOnChange: false,
     onSubmit: ({ name }) => {
       dispatch(setLoadingStatus('loading'));
-      const payload = { id: item.id, name, removable: true };
+
+      filter.loadDictionary('en');
+      const filteredEnglishName = filter.clean(name);
+      filter.loadDictionary('ru');
+      const filteredRussianName = filter.clean(filteredEnglishName);
+      const cleanName = filter.clean(filteredRussianName);
+
+      const payload = { id: item.id, name: cleanName, removable: true };
 
       socket.emit('renameChannel', payload, (response) => {
         console.log(response);
