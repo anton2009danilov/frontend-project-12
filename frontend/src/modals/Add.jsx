@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 import { useSocket } from '../hooks';
 import { setLoadingStatus, setCurrentChannelId } from '../slices/userInterfaceSlice';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice';
@@ -54,7 +55,14 @@ const Add = (props) => {
     validateOnChange: false,
     onSubmit: ({ name }) => {
       dispatch(setLoadingStatus('loading'));
-      socket.emit('newChannel', { name }, (response) => {
+
+      filter.loadDictionary('en');
+      const filteredEnglishName = filter.clean(name);
+      filter.loadDictionary('ru');
+      const filteredRussianName = filter.clean(filteredEnglishName);
+      const cleanName = filter.clean(filteredRussianName);
+
+      socket.emit('newChannel', { name: cleanName }, (response) => {
         const { data } = response;
         dispatch(channelsActions.addChannel(data));
         dispatch(setCurrentChannelId(data.id));

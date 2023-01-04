@@ -20,10 +20,10 @@ const MessageForm = () => {
     onSubmit: async (values, { resetForm }) => {
       const { message: unfilteredMessage } = values;
       filter.loadDictionary('en');
-      const filterEnglishMessage = filter.clean(unfilteredMessage);
+      const filteredEnglishMessage = filter.clean(unfilteredMessage);
       filter.loadDictionary('ru');
-      const filterRussianMessage = filter.clean(filterEnglishMessage);
-      const body = filter.clean(filterRussianMessage);
+      const filteredRussianMessage = filter.clean(filteredEnglishMessage);
+      const body = filter.clean(filteredRussianMessage);
       const username = localStorage.getItem('userName');
 
       const message = {
