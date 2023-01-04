@@ -15,7 +15,7 @@ export default {
     socketMessages: {
       successfulChannelCreation: 'Канал создан',
       successfulChannelRename: 'Канал переименован',
-      successfulChannelRemove: 'Канал удален',
+      successfulChannelRemove: 'Канал удалён',
       failedDataLoading: 'Ошибка: не удалось получить данные с сервера',
     },
     titles: {
