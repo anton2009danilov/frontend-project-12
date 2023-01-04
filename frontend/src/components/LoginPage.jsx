@@ -5,7 +5,6 @@ import {
 } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
-import * as yup from 'yup';
 import axios from 'axios';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -22,26 +21,13 @@ const Login = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-    // throw (new Error('test error 2'));
   }, []);
-
-  const validationSchema = yup.object().shape({
-    username: yup.string()
-      .required(t('yup.errors.required'))
-      .min(3, t('yup.errors.userNameLength'))
-      .max(20, t('yup.errors.userNameLength')),
-    password: yup.string()
-      .required(t('yup.errors.required'))
-      .min(6, t('yup.errors.passwordLength')),
-  });
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    validationSchema,
-    validateOnChange: false,
     onSubmit: async (values) => {
       setAuthError('');
       const { username, password } = values;
@@ -62,7 +48,7 @@ const Login = () => {
   });
 
   const usernameFieldClass = cn({
-    'is-invalid': formik.errors.username,
+    'is-invalid': formik.errors.username || authError,
   });
 
   const passwordFieldClass = cn({
@@ -93,12 +79,9 @@ const Login = () => {
                     required
                   />
                   <Form.Label htmlFor="username">{t('forms.login.userName')}</Form.Label>
-                  <Form.Text className="invalid-tooltip">
-                    {formik.errors.username}
-                  </Form.Text>
                 </Form.Group>
 
-                <Form.Group className="mb-3 form-floating">
+                <Form.Group className="mb-4 form-floating">
                   <Form.Control
                     id="password"
                     name="password"
