@@ -46,15 +46,17 @@ const Login = () => {
       setAuthError('');
       const { username, password } = values;
 
-      axios.post('/api/v1/login', { username, password }).then((response) => {
-        auth.logIn(response.data, username);
-        navigate('/');
-      })
+      return axios.post('/api/v1/login', { username, password })
+        .then((response) => {
+          auth.logIn(response.data, username);
+          navigate('/');
+        })
         .catch((e) => {
           console.log(e);
           formik.setSubmitting(false);
           setAuthError(t('yup.errors.authError'));
           inputRef.current.select();
+          throw (e);
         });
     },
   });
