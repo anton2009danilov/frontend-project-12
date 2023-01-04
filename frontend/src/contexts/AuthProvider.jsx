@@ -15,18 +15,19 @@ const AuthContextProvider = ({ children }) => {
     setLoggedIn(false);
   };
 
+  const memorizedValue = useMemo(() => {
+    const logIn = (data, username) => {
+      const { token } = data;
+      dispatch(fetchInitialData(token));
+      localStorage.setItem('userId', token);
+      localStorage.setItem('userName', username);
+      setLoggedIn(true);
+    };
+    return { loggedIn, logIn, logOut };
+  }, [loggedIn, dispatch]);
+
   return (
-    <AuthContext.Provider value={useMemo(() => {
-      const logIn = (data, username) => {
-        const { token } = data;
-        dispatch(fetchInitialData(token));
-        localStorage.setItem('userId', token);
-        localStorage.setItem('userName', username);
-        setLoggedIn(true);
-      };
-      return { loggedIn, logIn, logOut };
-    }, [loggedIn, dispatch])}
-    >
+    <AuthContext.Provider value={memorizedValue}>
       {children}
     </AuthContext.Provider>
   );
