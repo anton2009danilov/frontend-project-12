@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { useSocket } from '../hooks';
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import ArrowRightIcon from '../images/arrow-right-icon.svg';
@@ -17,7 +18,12 @@ const MessageForm = () => {
       message: '',
     },
     onSubmit: async (values, { resetForm }) => {
-      const { message: body } = values;
+      const { message: unfilteredMessage } = values;
+      filter.loadDictionary('en');
+      const filterEnglishMessage = filter.clean(unfilteredMessage);
+      filter.loadDictionary('ru');
+      const filterRussianMessage = filter.clean(filterEnglishMessage);
+      const body = filter.clean(filterRussianMessage);
       const username = localStorage.getItem('userName');
 
       const message = {
