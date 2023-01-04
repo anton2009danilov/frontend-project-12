@@ -15,6 +15,9 @@ import { selectors as channelsSelectors, actions as channelsActions } from '../s
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import { useSocket } from '../hooks';
 
+filter.add(filter.getDictionary('en'));
+filter.add(filter.getDictionary('ru'));
+
 const Rename = (props) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
@@ -55,11 +58,7 @@ const Rename = (props) => {
     onSubmit: ({ name }) => {
       dispatch(setLoadingStatus('loading'));
 
-      filter.loadDictionary('en');
-      const filteredEnglishName = filter.clean(name);
-      filter.loadDictionary('ru');
-      const filteredRussianName = filter.clean(filteredEnglishName);
-      const cleanName = filter.clean(filteredRussianName);
+      const cleanName = filter.clean(name);
 
       const payload = { id: item.id, name: cleanName, removable: true };
 

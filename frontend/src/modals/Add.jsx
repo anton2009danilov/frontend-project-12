@@ -15,6 +15,9 @@ import { useSocket } from '../hooks';
 import { setLoadingStatus, setCurrentChannelId } from '../slices/userInterfaceSlice';
 import { actions as channelsActions, selectors as channelsSelectors } from '../slices/channelsSlice';
 
+filter.add(filter.getDictionary('en'));
+filter.add(filter.getDictionary('ru'));
+
 const Add = (props) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
@@ -56,11 +59,7 @@ const Add = (props) => {
     onSubmit: ({ name }) => {
       dispatch(setLoadingStatus('loading'));
 
-      filter.loadDictionary('en');
-      const filteredEnglishName = filter.clean(name);
-      filter.loadDictionary('ru');
-      const filteredRussianName = filter.clean(filteredEnglishName);
-      const cleanName = filter.clean(filteredRussianName);
+      const cleanName = filter.clean(name);
 
       socket.emit('newChannel', { name: cleanName }, (response) => {
         const { data } = response;

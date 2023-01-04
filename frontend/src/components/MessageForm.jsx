@@ -7,6 +7,9 @@ import { useSocket } from '../hooks';
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import ArrowRightIcon from '../images/arrow-right-icon.svg';
 
+filter.add(filter.getDictionary('en'));
+filter.add(filter.getDictionary('ru'));
+
 const MessageForm = () => {
   const { t } = useTranslation();
   const { socket } = useSocket();
@@ -19,11 +22,7 @@ const MessageForm = () => {
     },
     onSubmit: async (values, { resetForm }) => {
       const { message: unfilteredMessage } = values;
-      filter.loadDictionary('en');
-      const filteredEnglishMessage = filter.clean(unfilteredMessage);
-      filter.loadDictionary('ru');
-      const filteredRussianMessage = filter.clean(filteredEnglishMessage);
-      const body = filter.clean(filteredRussianMessage);
+      const body = filter.clean(unfilteredMessage);
       const username = localStorage.getItem('userName');
 
       const message = {
