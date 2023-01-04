@@ -109,9 +109,9 @@ const Login = () => {
                     required
                   />
                   <Form.Label htmlFor="password">{t('forms.login.password')}</Form.Label>
-                  <Form.Text className="invalid-tooltip">
+                  <div className="invalid-tooltip">
                     {authError || formik.errors.password}
-                  </Form.Text>
+                  </div>
                 </Form.Group>
                 <Button variant="outline-primary" className="w-100 mb-3" type="submit">
                   {t('buttonNames.login')}
