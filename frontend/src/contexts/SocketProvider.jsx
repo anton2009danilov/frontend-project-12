@@ -7,7 +7,6 @@ import { SocketContext } from '.';
 const socket = io();
 
 const SocketContextProvider = ({ children }) => {
-  console.log('socket provider');
   const dispatch = useDispatch();
 
   socket.on('newMessage', (payload) => {

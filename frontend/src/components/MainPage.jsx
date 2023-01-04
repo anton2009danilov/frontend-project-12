@@ -25,9 +25,7 @@ const MainPage = () => {
       navigate('/login');
     }
 
-    console.log(loadingStatus);
     if (loadingStatus === 'failed') {
-      console.log('Error: loading failed');
       toast.error(t('socketMessages.failedDataLoading'));
       dispatch(setLoadingStatus('idle'));
     }

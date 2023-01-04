@@ -63,7 +63,6 @@ const Rename = (props) => {
       const payload = { id: item.id, name: cleanName, removable: true };
 
       socket.emit('renameChannel', payload, (response) => {
-        console.log(response);
         dispatch(channelsActions.setChannel(payload));
         toast.success(t('socketMessages.successfulChannelRename'));
         dispatch(setLoadingStatus('idle'));

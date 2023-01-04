@@ -6,7 +6,6 @@ import { AuthContext } from '.';
 const { userId } = window.localStorage;
 
 const AuthContextProvider = ({ children }) => {
-  console.log('auth provider');
   const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = useState(!!userId);
 
