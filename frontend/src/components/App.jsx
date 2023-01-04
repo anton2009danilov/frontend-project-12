@@ -17,14 +17,16 @@ import AuthProvider from '../contexts/AuthProvider';
 import SocketProvider from '../contexts/SocketProvider';
 import fetchInitialData from '../slices/fetchInitialData';
 import SignUp from './SignUpPage';
+// import { setLoadingStatus } from '../slices/userInterfaceSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   const { userId: token } = window.localStorage;
 
   useEffect(() => {
+    console.log('dispatch(fetchInitialData(token))');
     dispatch(fetchInitialData(token));
-  });
+  }, []);
 
   return (
     <React.StrictMode>

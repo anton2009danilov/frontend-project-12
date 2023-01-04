@@ -7,7 +7,7 @@ const initialState = {
   defaultChannelId: null,
   currentChannelId: null,
   loadingStatus: 'idle',
-  message: '',
+  error: '',
 };
 
 const userInterfaceSlice = createSlice({
@@ -23,22 +23,32 @@ const userInterfaceSlice = createSlice({
     setLoadingStatus(state, action) {
       state.loadingStatus = action.payload;
     },
-    setMessage(state, action) {
-      state.message = action.message;
+    setError(state, action) {
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchInitialData.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
       .addCase(fetchInitialData.fulfilled, (state, action) => {
+        state.loadingStatus = 'idle';
         const { currentChannelId } = action.payload;
         state.currentChannelId = currentChannelId;
         state.defaultChannelId = currentChannelId;
+        state.error = null;
+      })
+      .addCase(fetchInitialData.rejected, (state, action) => {
+        state.loadingStatus = 'failed';
+        state.error = action.error;
       });
   },
 });
 
 export const {
-  setCurrentChannelId, setDefaultChannelId, setLoadingStatus, setMessage,
+  setCurrentChannelId, setDefaultChannelId, setLoadingStatus, setError,
 } = userInterfaceSlice.actions;
 
 export default userInterfaceSlice.reducer;

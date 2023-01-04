@@ -2,25 +2,36 @@ import {
   useEffect,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import Channels from './Channels';
 import Messages from './Messages';
+import { setLoadingStatus } from '../slices/userInterfaceSlice';
 
 import MessageForm from './MessageForm';
 
 const MainPage = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { currentChannelId: initialChannelId } = useSelector((state) => state.ui);
+  const { currentChannelId: initialChannelId, loadingStatus } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    console.log('useEffect');
     const { userId: token } = window.localStorage;
 
     if (!token) {
       navigate('/login');
     }
-  }, []);
+
+    console.log(loadingStatus);
+    if (loadingStatus === 'failed') {
+      console.log('Error: loading failed');
+      toast.error(t('socketMessages.failedDataLoading'));
+      dispatch(setLoadingStatus('idle'));
+    }
+  }, [dispatch, navigate, loadingStatus]);
 
   return initialChannelId
     ? (

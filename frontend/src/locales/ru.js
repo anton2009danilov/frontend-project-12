@@ -16,6 +16,7 @@ export default {
       successfulChannelCreation: 'Канал создан',
       successfulChannelRename: 'Канал переименован',
       successfulChannelRemove: 'Канал удален',
+      failedDataLoading: 'Ошибка: не удалось получить данные с сервера',
     },
     titles: {
       login: 'Войти',
