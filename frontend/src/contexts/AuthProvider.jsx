@@ -10,21 +10,23 @@ const AuthContextProvider = ({ children }) => {
   const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = useState(!!userId);
 
-  const logIn = (data, username) => {
-    const { token } = data;
-    dispatch(fetchInitialData(token));
-    localStorage.setItem('userId', token);
-    localStorage.setItem('userName', username);
-    setLoggedIn(true);
-  };
-
   const logOut = () => {
     localStorage.clear();
     setLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn])}>
+    <AuthContext.Provider value={useMemo(() => {
+      const logIn = (data, username) => {
+        const { token } = data;
+        dispatch(fetchInitialData(token));
+        localStorage.setItem('userId', token);
+        localStorage.setItem('userName', username);
+        setLoggedIn(true);
+      };
+      return { loggedIn, logIn, logOut };
+    }, [loggedIn, dispatch])}
+    >
       {children}
     </AuthContext.Provider>
   );

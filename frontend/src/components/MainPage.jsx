@@ -31,7 +31,7 @@ const MainPage = () => {
       toast.error(t('socketMessages.failedDataLoading'));
       dispatch(setLoadingStatus('idle'));
     }
-  }, [dispatch, navigate, loadingStatus]);
+  }, [dispatch, navigate, loadingStatus, t]);
 
   return initialChannelId
     ? (
