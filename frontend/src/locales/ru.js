@@ -47,6 +47,7 @@ export default {
       delete: 'Удалить',
       rename: 'Переименовать',
       send: 'Отправить',
+      channelManagement: 'Управление каналом',
     },
     links: {
       toMainPage_title: 'Но вы можете перейти',

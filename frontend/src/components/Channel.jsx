@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
-  Button, ButtonGroup, Dropdown, DropdownButton,
+  Button, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
 import { setCurrentChannelId } from '../slices/userInterfaceSlice';
 
@@ -29,22 +29,28 @@ const Channel = ({ channel, showModal }) => {
 
   const renderDropdown = () => (removable
     ? (
-      <DropdownButton title="" variant={btnVariant} as={ButtonGroup}>
-        <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="1">{t('buttonNames.delete')}</Dropdown.Item>
-        <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="2">{t('buttonNames.rename')}</Dropdown.Item>
-      </DropdownButton>
+      <>
+        <Dropdown.Toggle variant={btnVariant} className="flex-grow-0 dropdown-toggle-split">
+          <span className="visually-hidden">{t('buttonNames.channelManagement')}</span>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item onClick={() => showModal('removing', channel)} eventKey="1">{t('buttonNames.delete')}</Dropdown.Item>
+          <Dropdown.Item onClick={() => showModal('renaming', channel)} eventKey="2">{t('buttonNames.rename')}</Dropdown.Item>
+        </Dropdown.Menu>
+      </>
+
     )
     : null);
 
   return (
     <li className="nav-item w-100">
-      <ButtonGroup className="w-100">
+      <Dropdown as={ButtonGroup} className="w-100">
         <Button variant={btnVariant} onClick={onClick} type="button" className={btnClass}>
           <span className="me-1">#</span>
           { name }
         </Button>
         {renderDropdown()}
-      </ButtonGroup>
+      </Dropdown>
     </li>
   );
 };
