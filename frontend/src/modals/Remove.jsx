@@ -43,7 +43,7 @@ const Remove = (props) => {
           <Button onClick={onHide} variant="secondary" className="me-2">
             Отменить
           </Button>
-          <Button onClick={onClickDeleteBtn} disabled={loadingStatus === 'loading'}>Удалить</Button>
+          <Button onClick={onClickDeleteBtn} variant="danger" disabled={loadingStatus === 'loading'}>Удалить</Button>
         </div>
       </Modal.Body>
     </Modal>
