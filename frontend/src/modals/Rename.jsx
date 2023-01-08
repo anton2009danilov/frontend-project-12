@@ -33,18 +33,18 @@ const Rename = (props) => {
 
   const validationSchema = yup.object().shape({
     name: yup.string()
-      .required('Обязательное поле')
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
+      .required(t('yup.errors.required'))
+      .min(3, t('yup.errors.channelNameLength'))
+      .max(20, t('yup.errors.channelNameLength'))
       .test(
         'uniqName',
-        'Должно быть уникальным',
+        t('yup.errors.uniqName'),
         function (value) {
           const { path, createError } = this;
 
           return !channels.some(({ name }) => name === value)
             ? true
-            : createError({ path, message: 'Должно быть уникальным' });
+            : createError({ path, message: t('yup.errors.uniqName') });
         },
       ),
   });
