@@ -26,11 +26,9 @@ const rollbarConfig = {
 
 const ErrorDisplay = ({
   error,
-  // resetError,
 }) => (
   <div>
     {error.message}
-    {/* <button type="button" onClick={() => resetError()}>reset error</button> */}
   </div>
 );
 
