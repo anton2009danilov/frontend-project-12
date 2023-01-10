@@ -4,12 +4,12 @@ import routes from '../routes';
 
 const fetchInitialData = createAsyncThunk(
   'fetchInitialData',
-  async (userId) => {
+  async (token) => {
     const response = await axios.get(
       routes.apiDataPath(),
       {
         headers: {
-          Authorization: `Bearer ${userId}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );
