@@ -26,6 +26,7 @@ export default {
       noAccount: 'Нет аккаунта?',
       headerLogo: 'Hexlet Chat',
       pageNotFound: 'Страница не найдена',
+      channels: 'Каналы',
     },
     forms: {
       login: {

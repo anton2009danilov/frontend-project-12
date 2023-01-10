@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { selectors as channelsSelectors } from '../slices/channelsSlice';
 import { ReactComponent as PlusIcon } from '../images/plus-icon.svg';
 import Channel from './Channel';
@@ -20,6 +21,7 @@ const renderModal = (({ modalInfo, hideModal }) => {
 });
 
 const Channels = () => {
+  const { t } = useTranslation();
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const hideModal = () => setModalInfo({ type: null, item: null });
   const showModal = (type, item = null) => setModalInfo({ type, item });
@@ -30,7 +32,7 @@ const Channels = () => {
     <>
       <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
         <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-          <span>Каналы</span>
+          <span>{t('titles.channels')}</span>
           <Button
             variant="primary"
             type="button"
