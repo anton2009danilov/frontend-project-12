@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,12 @@ const MessageForm = () => {
   const { t } = useTranslation();
   const { socket } = useSocket();
   const dispatch = useDispatch();
+  const inputRef = useRef();
   const { currentChannelId: channelId, loadingStatus } = useSelector((state) => state.ui);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -54,6 +59,7 @@ const MessageForm = () => {
             onChange={formik.handleChange}
             value={formik.values.message}
             disabled={loadingStatus === 'loading'}
+            ref={inputRef}
           />
           <button type="submit" disabled={!formik.values.message || loadingStatus === 'loading'} className="btn btn-group-vertical border-0">
             <span className="visually-hidden">{t('buttonNames.send')}</span>
