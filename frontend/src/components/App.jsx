@@ -19,8 +19,10 @@ import SocketProvider from '../contexts/SocketProvider';
 import fetchInitialData from '../slices/fetchInitialData';
 import SignUp from './SignUpPage';
 
+console.log(process.env);
+
 const rollbarConfig = {
-  accessToken: '3eed5cc9402645968aa38d291907b42f',
+  accessToken: process.env.REACT_APP_POST_CLIENT_ITEM_ACCESS_TOKEN,
   environment: 'production',
 };
 
