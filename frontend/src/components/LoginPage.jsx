@@ -20,6 +20,8 @@ const Login = () => {
   const inputRef = useRef();
   const navigate = useNavigate();
 
+  const throwError = () => { throw new Error('login page error'); };
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -58,6 +60,7 @@ const Login = () => {
 
   return (
     <div className="container-fluid h-100">
+      {throwError()}
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <Card>

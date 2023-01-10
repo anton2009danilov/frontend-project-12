@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -5,8 +6,8 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { Provider as RollbarProvider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
-import { ToastContainer } from 'react-toastify';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { toast, ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,39 +27,46 @@ const rollbarConfig = {
   environment: 'production',
 };
 
-const ErrorDisplay = ({
-  error,
-}) => (
-  <div>
-    {error.message}
-  </div>
-);
+const ErrorDisplay = ({ error }) => {
+  toast.error(`Ошибка при отображении страницы: ${error.message}`);
+
+  return (
+    <div className="container m-4 text-center">
+      {error.message}
+    </div>
+  );
+};
 
 const App = () => {
+  console.log('render app');
   const dispatch = useDispatch();
   const { userId: token } = window.localStorage;
 
   useEffect(() => {
     dispatch(fetchInitialData(token));
-  }, [dispatch, token]);
+  }, []);
 
   return (
     <React.StrictMode>
       <RollbarProvider config={rollbarConfig}>
-        <ErrorBoundary level={LEVEL_WARN} fallbackUI={ErrorDisplay}>
+        <ErrorBoundary
+          fallbackUI={ErrorDisplay}
+        >
           <SocketProvider>
             <AuthProvider>
               <Router>
                 <div className="d-flex flex-column h-100">
                   <Header />
-                  <Routes>
-                    <Route path="/" errorElement={<ErrorPage />}>
-                      <Route index element={<MainPage />} />
-                      <Route path="login" element={<Login />} />
-                      <Route path="signup" element={<SignUp />} />
-                      <Route path="*" element={<ErrorPage />} />
-                    </Route>
-                  </Routes>
+                  <ErrorBoundary fallbackUI={ErrorDisplay}>
+                    <Routes>
+                      <Route path="/" errorElement={<ErrorPage />}>
+                        <Route index element={<MainPage />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<SignUp />} />
+                        <Route path="*" element={<ErrorPage />} />
+                      </Route>
+                    </Routes>
+                  </ErrorBoundary>
                   <ToastContainer />
                 </div>
               </Router>
