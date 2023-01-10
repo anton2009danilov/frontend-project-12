@@ -1,5 +1,5 @@
 import {
-  useEffect,
+  useEffect, useContext,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Channels from './Channels';
 import Messages from './Messages';
 import { setLoadingStatus } from '../slices/userInterfaceSlice';
+import { AuthContext } from '../contexts';
 
 import MessageForm from './MessageForm';
 
@@ -15,6 +16,7 @@ const MainPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { logOut } = useContext(AuthContext);
 
   const { currentChannelId: initialChannelId, loadingStatus } = useSelector((state) => state.ui);
 
@@ -28,8 +30,10 @@ const MainPage = () => {
     if (loadingStatus === 'failed') {
       toast.error(t('socketMessages.failedDataLoading'));
       dispatch(setLoadingStatus('idle'));
+      logOut();
+      navigate('/login');
     }
-  }, [dispatch, navigate, loadingStatus, t]);
+  }, [dispatch, navigate, loadingStatus, t, logOut]);
 
   return initialChannelId
     ? (

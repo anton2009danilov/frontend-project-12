@@ -1,9 +1,7 @@
 /* eslint no-param-reassign: 0 */
 
-import { useContext } from 'react';
 import { createSlice } from '@reduxjs/toolkit';
 import fetchInitialData from './fetchInitialData';
-import { AuthContext } from '../contexts';
 
 const initialState = {
   defaultChannelId: null,
@@ -45,8 +43,6 @@ const userInterfaceSlice = createSlice({
       .addCase(fetchInitialData.rejected, (state, action) => {
         state.loadingStatus = 'failed';
         state.error = action.error;
-        const { logOut } = useContext(AuthContext);
-        logOut();
       });
   },
 });
