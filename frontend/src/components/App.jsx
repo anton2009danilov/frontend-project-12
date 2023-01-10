@@ -11,6 +11,7 @@ import {
   toast,
   ToastContainer,
 } from 'react-toastify';
+import ruLocale from '../locales/ru';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,8 +30,7 @@ const rollbarConfig = {
   environment: 'production',
   onSendCallback: (isUncaught, args, payload) => {
     const { body: { trace } } = payload;
-
-    toast.error(`Ошибка при отображении страницы: ${trace.exception.message}`);
+    toast.error(`${ruLocale.translation.yup.errors.renderError}: ${trace.exception.message}`);
   },
 };
 

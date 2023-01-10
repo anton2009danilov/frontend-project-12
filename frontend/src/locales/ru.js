@@ -12,6 +12,7 @@ export default {
         uniqName: 'Должно быть уникальным',
         networkError: 'Ошибка соединения',
         requestError: 'Запрос к серверу завершился с ошибкой',
+        renderError: 'Ошибка при отображении страницы',
       },
     },
     socketMessages: {
