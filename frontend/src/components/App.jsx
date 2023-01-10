@@ -7,7 +7,10 @@ import {
   Route,
 } from 'react-router-dom';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import { toast, ToastContainer } from 'react-toastify';
+import {
+  toast,
+  ToastContainer,
+} from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,28 +27,28 @@ import SignUp from './SignUpPage';
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_POST_CLIENT_ITEM_ACCESS_TOKEN,
   environment: 'production',
+  onSendCallback: (isUncaught, args, payload) => {
+    const { body: { trace } } = payload;
+
+    toast.error(`Ошибка при отображении страницы: ${trace.exception.message}`);
+  },
 };
 
-const ErrorDisplay = ({ error }) => {
-  toast.error(`Ошибка при отображении страницы: ${error.message}`);
-
-  return (
-    <div className="container m-4 text-center">
-      {error.message}
-    </div>
-  );
-};
+const ErrorDisplay = ({ error }) => (
+  <div className="container m-4 text-center">
+    {error.message}
+  </div>
+);
 
 const App = () => {
-  console.log('render app');
   const dispatch = useDispatch();
   const { userId: token } = window.localStorage;
 
   useEffect(() => {
-    dispatch(fetchInitialData(token));
+    if (token) {
+      dispatch(fetchInitialData(token));
+    }
   }, []);
-
-  console.log(routes.signup());
 
   return (
     <React.StrictMode>

@@ -20,7 +20,7 @@ const Login = () => {
   const inputRef = useRef();
   const navigate = useNavigate();
 
-  // const throwError = () => { throw new Error('login page error'); };
+  const throwError = () => { throw new Error('Login page error'); };
 
   useEffect(() => {
     inputRef.current.focus();
@@ -41,7 +41,6 @@ const Login = () => {
           navigate('/');
         })
         .catch((e) => {
-          console.log(e);
           formik.setSubmitting(false);
           setAuthError(t('yup.errors.authError'));
           inputRef.current.select();
@@ -60,9 +59,9 @@ const Login = () => {
 
   return (
     <div className="container-fluid h-100">
-      {/* {throwError()} */}
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
+          {throwError()}
           <Card>
             <Card.Body className="row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
