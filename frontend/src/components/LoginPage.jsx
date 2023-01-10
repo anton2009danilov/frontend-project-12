@@ -20,7 +20,7 @@ const Login = () => {
   const inputRef = useRef();
   const navigate = useNavigate();
 
-  const throwError = () => { throw new Error('login page error'); };
+  // const throwError = () => { throw new Error('login page error'); };
 
   useEffect(() => {
     inputRef.current.focus();
@@ -35,7 +35,7 @@ const Login = () => {
       setAuthError('');
       const { username, password } = values;
 
-      return axios.post(routes.loginPath(), { username, password })
+      return axios.post(routes.apiLoginPath(), { username, password })
         .then((response) => {
           auth.logIn(response.data, username);
           navigate('/');
@@ -60,7 +60,7 @@ const Login = () => {
 
   return (
     <div className="container-fluid h-100">
-      {throwError()}
+      {/* {throwError()} */}
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <Card>

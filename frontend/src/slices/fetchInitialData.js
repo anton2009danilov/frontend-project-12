@@ -6,7 +6,7 @@ const fetchInitialData = createAsyncThunk(
   'fetchInitialData',
   async (userId) => {
     const response = await axios.get(
-      routes.initialDataPath(),
+      routes.apiDataPath(),
       {
         headers: {
           Authorization: `Bearer ${userId}`,

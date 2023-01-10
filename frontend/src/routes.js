@@ -1,5 +1,9 @@
 export default {
-  initialDataPath: () => '/api/v1/data',
-  loginPath: () => '/api/v1/login',
-  signupPath: () => '/api/v1/signup',
+  apiDataPath: () => '/api/v1/data',
+  apiLoginPath: () => '/api/v1/login',
+  apiSignupPath: () => '/api/v1/signup',
+  root: () => '/',
+  login: () => 'login',
+  signup: () => 'signup',
+  notFound: () => '*',
 };

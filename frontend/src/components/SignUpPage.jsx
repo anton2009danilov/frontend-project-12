@@ -50,7 +50,7 @@ const SignUp = () => {
       setSignUpError('');
       const { username, password } = values;
 
-      axios.post(routes.signupPath(), { username, password }).then((response) => {
+      axios.post(routes.apiSignupPath(), { username, password }).then((response) => {
         auth.logIn(response.data, username);
         navigate('/');
       })

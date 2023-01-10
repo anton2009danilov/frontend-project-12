@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import 'react-toastify/dist/ReactToastify.css';
+import routes from '../routes';
 import Header from './Header';
 import MainPage from './MainPage';
 import Login from './LoginPage';
@@ -19,8 +20,6 @@ import AuthProvider from '../contexts/AuthProvider';
 import SocketProvider from '../contexts/SocketProvider';
 import fetchInitialData from '../slices/fetchInitialData';
 import SignUp from './SignUpPage';
-
-console.log(process.env);
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_POST_CLIENT_ITEM_ACCESS_TOKEN,
@@ -46,6 +45,8 @@ const App = () => {
     dispatch(fetchInitialData(token));
   }, []);
 
+  console.log(routes.signup());
+
   return (
     <React.StrictMode>
       <RollbarProvider config={rollbarConfig}>
@@ -59,11 +60,11 @@ const App = () => {
                   <Header />
                   <ErrorBoundary fallbackUI={ErrorDisplay}>
                     <Routes>
-                      <Route path="/" errorElement={<ErrorPage />}>
+                      <Route path={routes.root()} errorElement={<ErrorPage />}>
                         <Route index element={<MainPage />} />
-                        <Route path="login" element={<Login />} />
-                        <Route path="signup" element={<SignUp />} />
-                        <Route path="*" element={<ErrorPage />} />
+                        <Route path={routes.login()} element={<Login />} />
+                        <Route path={routes.signup()} element={<SignUp />} />
+                        <Route path={routes.notFound()} element={<ErrorPage />} />
                       </Route>
                     </Routes>
                   </ErrorBoundary>
