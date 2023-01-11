@@ -7,7 +7,7 @@ const initialState = {
   defaultChannelId: null,
   currentChannelId: null,
   loadingStatus: 'idle',
-  error: '',
+  error: null,
 };
 
 const userInterfaceSlice = createSlice({
