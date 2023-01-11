@@ -53,7 +53,7 @@ const App = () => {
       toast.error(`${t('yup.errors.renderError')}: ${error.message}`);
       dispatch(setError(null));
     }
-  }, [error]);
+  }, []);
 
   return (
     <React.StrictMode>
