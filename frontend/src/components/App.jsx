@@ -1,17 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import {
-  toast,
-  ToastContainer,
-} from 'react-toastify';
-import ruLocale from '../locales/ru';
+import { toast, ToastContainer } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,16 +20,8 @@ import ErrorPage from './ErrorPage';
 import AuthProvider from '../contexts/AuthProvider';
 import SocketProvider from '../contexts/SocketProvider';
 import fetchInitialData from '../slices/fetchInitialData';
+import { setError } from '../slices/userInterfaceSlice';
 import SignUp from './SignUpPage';
-
-const rollbarConfig = {
-  accessToken: process.env.REACT_APP_POST_CLIENT_ITEM_ACCESS_TOKEN,
-  environment: 'production',
-  onSendCallback: (isUncaught, args, payload) => {
-    const { body: { trace } } = payload;
-    toast.error(`${ruLocale.translation.yup.errors.renderError}: ${trace.exception.message}`);
-  },
-};
 
 const ErrorDisplay = ({ error }) => (
   <div className="container m-4 text-center">
@@ -41,14 +30,30 @@ const ErrorDisplay = ({ error }) => (
 );
 
 const App = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { userId: token } = window.localStorage;
+  const { error } = useSelector((state) => state.ui);
+
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_POST_CLIENT_ITEM_ACCESS_TOKEN,
+    environment: 'production',
+    onSendCallback: (isUncaught, args, payload) => {
+      const { body: { trace } } = payload;
+      dispatch(setError(trace.exception));
+    },
+  };
 
   useEffect(() => {
     if (token) {
       dispatch(fetchInitialData(token));
     }
-  }, []);
+
+    if (error) {
+      toast.error(`${t('yup.errors.renderError')}: ${error.message}`);
+      dispatch(setError(null));
+    }
+  }, [error]);
 
   return (
     <React.StrictMode>
