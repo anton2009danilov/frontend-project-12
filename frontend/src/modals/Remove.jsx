@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Modal, Button,
 } from 'react-bootstrap';
@@ -17,8 +17,6 @@ const Remove = (props) => {
   const { defaultChannelId } = useSelector((state) => state.ui);
   const { loadingStatus } = useSelector((state) => state.ui);
   const { onHide, modalInfo: { item } } = props;
-
-  useEffect(() => {}, []);
 
   const onClickDeleteBtn = () => {
     dispatch(setLoadingStatus('loading'));
