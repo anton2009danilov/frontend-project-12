@@ -21,12 +21,6 @@ const MainPage = () => {
   const { currentChannelId: initialChannelId, loadingStatus } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    const { userId: token } = window.localStorage;
-
-    if (!token) {
-      navigate('/login');
-    }
-
     if (loadingStatus === 'failed') {
       toast.error(t('socketMessages.failedDataLoading'));
       dispatch(setLoadingStatus('idle'));

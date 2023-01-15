@@ -5,6 +5,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
+  useLocation,
 } from 'react-router-dom';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { toast, ToastContainer } from 'react-toastify';
@@ -18,6 +20,7 @@ import MainPage from './MainPage';
 import Login from './LoginPage';
 import ErrorPage from './ErrorPage';
 import AuthProvider from '../contexts/AuthProvider';
+import { useAuth } from '../hooks';
 import SocketProvider from '../contexts/SocketProvider';
 import fetchInitialData from '../slices/fetchInitialData';
 import { setError } from '../slices/userInterfaceSlice';
@@ -28,6 +31,15 @@ const ErrorDisplay = ({ error }) => (
     {error.message}
   </div>
 );
+
+const PrivateRoute = ({ children }) => {
+  const auth = useAuth();
+  const location = useLocation();
+
+  return (
+    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+  );
+};
 
 const App = () => {
   const { t } = useTranslation();
@@ -69,7 +81,14 @@ const App = () => {
                   <ErrorBoundary fallbackUI={ErrorDisplay}>
                     <Routes>
                       <Route path={routes.root()} errorElement={<ErrorPage />}>
-                        <Route index element={<MainPage />} />
+                        <Route
+                          index
+                          element={(
+                            <PrivateRoute>
+                              <MainPage />
+                            </PrivateRoute>
+                          )}
+                        />
                         <Route path={routes.login()} element={<Login />} />
                         <Route path={routes.signup()} element={<SignUp />} />
                         <Route path={routes.notFound()} element={<ErrorPage />} />
