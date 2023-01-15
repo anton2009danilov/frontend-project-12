@@ -44,7 +44,7 @@ const PrivateRoute = ({ children }) => {
 const App = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { userId: token } = window.localStorage;
+  const { authToken: token } = window.localStorage;
   const { error } = useSelector((state) => state.ui);
 
   const rollbarConfig = {

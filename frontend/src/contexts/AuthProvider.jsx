@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import fetchInitialData from '../slices/fetchInitialData';
 import { AuthContext } from '.';
 
-const { userId } = window.localStorage;
+const { authToken } = window.localStorage;
 
 const AuthContextProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const [loggedIn, setLoggedIn] = useState(!!userId);
+  const [loggedIn, setLoggedIn] = useState(!!authToken);
 
   const logOut = () => {
     localStorage.clear();
@@ -18,7 +18,7 @@ const AuthContextProvider = ({ children }) => {
     const logIn = (data, username) => {
       const { token } = data;
       dispatch(fetchInitialData(token));
-      localStorage.setItem('userId', token);
+      localStorage.setItem('authToken', token);
       localStorage.setItem('userName', username);
       setLoggedIn(true);
     };
