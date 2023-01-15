@@ -3,6 +3,7 @@ import {
   useRef,
   useEffect,
 } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
 import * as yup from 'yup';
@@ -11,15 +12,19 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks';
+import { setLoadingStatus } from '../slices/userInterfaceSlice';
 import routes from '../routes';
 import signUpImage from '../images/signup.jpg';
 
 const SignUp = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-  const [signUpError, setSignUpError] = useState('');
   const inputRef = useRef();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [signUpError, setSignUpError] = useState('');
+  const { loadingStatus } = useSelector((state) => state.ui);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -49,12 +54,15 @@ const SignUp = () => {
     onSubmit: async (values) => {
       setSignUpError('');
       const { username, password } = values;
+      dispatch(setLoadingStatus('loading'));
 
       axios.post(routes.apiSignupPath(), { username, password }).then((response) => {
+        dispatch(setLoadingStatus('idle'));
         auth.logIn(response.data, username);
         navigate('/');
       })
         .catch((e) => {
+          dispatch(setLoadingStatus('failed'));
           formik.setSubmitting(false);
           inputRef.current.select();
 
@@ -82,7 +90,7 @@ const SignUp = () => {
   });
 
   const retypePasswordFieldClass = cn({
-    'is-invalid': signUpError || formik.errors.retypePassword,
+    'is-invalid': formik.errors.retypePassword,
   });
 
   return (
@@ -147,7 +155,7 @@ const SignUp = () => {
                     {signUpError}
                   </Form.Text>
                 </Form.Group>
-                <Button variant="outline-primary" className="w-100 mb-3" type="submit">
+                <Button variant="outline-primary" disabled={loadingStatus === 'loading'} className="w-100 mb-3" type="submit">
                   {t('buttonNames.signup')}
                 </Button>
               </Form>
